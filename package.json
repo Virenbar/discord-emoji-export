@@ -1,0 +1,43 @@
+{
+  "name": "discord-emoji-export",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Virenbar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Virenbar/discord-emoji-export.git"
+  },
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel -p 8080",
+    "build": "parcel build"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.2",
+    "bootswatch": "^5.2.1",
+    "jquery": "^3.6.1",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.7.0",
+    "@types/bootstrap": "^5.2.5",
+    "@types/jquery": "^3.5.14",
+    "@types/lodash": "^4.14.186",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "discord-api-types": "^0.37.11",
+    "eslint": "^8.24.0",
+    "eslint-plugin-import": "^2.26.0",
+    "parcel": "^2.7.0",
+    "process": "^0.11.10",
+    "typescript": "^4.8.4"
+  },
+  "type": "module",
+  "private": true
+}

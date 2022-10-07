@@ -1,0 +1,14 @@
+$blue: #5865F2;
+$green: #57F287;
+$yellow: #FEE75C;
+$red: #ED4245;
+
+$link-color: $blue;
+
+$bs-body-bg: hsl(220, calc(var(--saturation-factor, 1)*7.7%), 22.9%);
+
+@import "~bootswatch/dist/darkly/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/darkly/bootswatch";
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
