@@ -9,41 +9,23 @@ import "bootstrap";
 import { APIUser } from "discord-api-types/v10";
 import _ from "lodash";
 import ReactDOM from "react-dom/client";
-import { Welcome } from "./components/emoji";
+import { EmojiList, Welcome } from "./components/emoji";
 import D from "./discord";
 
-//import "bootstrap-select/dist/css/bootstrap-select.css"
-/*
-function component() {
-    const element = document.createElement("div");
-    element.innerHTML = _.join(["Hello", "webpack"], " ");
-    return element;
-}
-document.body.appendChild(component());
-*/
 const t = Welcome({ name: "1234" });
-const card = ReactDOM.createRoot(document.getElementById("export") as HTMLElement);
-card.render(t);
+const Browse = ReactDOM.createRoot(document.getElementById("browse") as HTMLElement);
+Browse.render(t);
 
 /////////////////////
-const Login = document.getElementById("login",) as HTMLElement;
 const Logout = document.getElementById("logout",) as HTMLElement;
 const Guild = document.getElementById("inputGuild") as HTMLSelectElement;
 const Export = document.getElementById("tabs") as HTMLElement;
 
 function Init() {
-    const Params = new URLSearchParams({
-        client_id: "1023904952634056754",
-        redirect_uri: window.location.origin,
-        response_type: "token",
-        scope: "identify guilds"
-    });
-    Login.style.display = "none";
     Logout.style.display = "none";
 
-    // Export.style.display = "none";
+    //Export.style.display = "none";
 
-    document.querySelector<HTMLLinkElement>("#login a")!.href = "https://discord.com/api/oauth2/authorize?" + Params.toString();
     document.querySelector<HTMLButtonElement>("#logout .btn-primary")!.onclick = (e) => {
         console.log(e.target);
         logout();
@@ -53,28 +35,24 @@ function Init() {
         setEmojiList();
     };
 }
+function setToken() {
+    const token = (<HTMLInputElement>document.getElementById("inputToken")).value;
+    const Match = /(\w+\.\w+\.\w+)/.exec(token);
+    if (Match?.length) {
+        console.log(Match[0]);
+        localStorage.setItem("token", Match[0]);
+        console.info("Token saved");
+        CheckToken();
+    }
+}
 
 async function CheckToken() {
     try {
-        const fragment = new URLSearchParams(window.location.hash.slice(1));
-        const access_token = fragment.get("access_token");
-        if (access_token) {
-            localStorage.setItem("token", access_token);
-            console.info("Token saved");
-        }
-
         const token = localStorage.getItem("token");
-        if (!token) {
-            Login.style.display = "";
-            return;
-        } else {
-            Logout.style.display = "";
-        }
+        if (!token) { return; }
+        Logout.style.display = "";
 
         D.setToken(token);
-        const T = await D.getTokenInfo();
-        console.log(T, new Date(T.expires));
-
         const user = await D.getMe();
         setUser(user);
 
@@ -113,6 +91,7 @@ async function setEmojiList() {
     const id = Guild.options[index].value;
     const emojis = await D.getGuildEmojis(id);
     console.log(emojis);
+    Browse.render(EmojiList(emojis));
 }
 
 function logout() {
@@ -124,6 +103,11 @@ window.onload = () => {
     CheckToken();
 };
 
-export function TTT() {
-    console.log("TTT");
+window.setToken = setToken;
+
+// Global
+declare global {
+    interface Window {
+        setToken: () => void;
+    }
 }

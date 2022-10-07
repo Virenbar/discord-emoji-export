@@ -1,39 +1,22 @@
 import type {
+    RESTAPIPartialCurrentUserGuild,
     RESTGetAPICurrentUserGuildsResult,
     RESTGetAPICurrentUserResult,
-    RESTGetAPIGuildEmojisResult,
-    RESTGetAPIOAuth2CurrentAuthorizationResult
+    RESTGetAPIGuildEmojisResult
 } from "discord-api-types/v10";
 
 let Token = "";
 const filter = /.*/;
 
-function setToken(token: string) {
-    Token = token;
-}
 async function fetchAPI<T>(path: string) {
     const url = `https://discord.com/api/${path}`;
-    const response = await fetch(url, { headers: { authorization: `Bearer ${Token}` } });
+    const response = await fetch(url, { headers: { authorization: Token } });
 
     // if (response.status !== 200) {
     //     console.warn("Fetch failed", response.statusText);
     //     return null;
     // }
     return await response.json() as T;
-}
-function getMe() {
-    return fetchAPI<RESTGetAPICurrentUserResult>("users/@me");
-}
-
-function getGuilds() {
-    return fetchAPI<RESTGetAPICurrentUserGuildsResult>("users/@me/guilds");
-}
-
-function getTokenInfo() {
-    return fetchAPI<RESTGetAPIOAuth2CurrentAuthorizationResult>("oauth2/@me");
-}
-function getGuildEmojis(guildID: string) {
-    return fetchAPI<RESTGetAPIGuildEmojisResult>(`guilds/${guildID}/emojis`);
 }
 
 async function getGuildEmojis0(guildID: string) {
@@ -49,10 +32,13 @@ async function getGuildEmojis0(guildID: string) {
     }
     return emojis;
 }
+
 export default {
-    setToken,
-    getMe,
-    getTokenInfo,
-    getGuilds,
-    getGuildEmojis
+    setToken: (token: string) => Token = token,
+    getMe: () => fetchAPI<RESTGetAPICurrentUserResult>("users/@me"),
+    getGuilds: () => fetchAPI<RESTGetAPICurrentUserGuildsResult>("users/@me/guilds"),
+    getGuildEmojis: (guildID: string) => fetchAPI<RESTGetAPIGuildEmojisResult>(`guilds/${guildID}/emojis`),
+    guildIcon: (guild: RESTAPIPartialCurrentUserGuild) => guild.icon
+        ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png" />${guild.name}`
+        : guild.name
 };

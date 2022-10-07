@@ -12,3 +12,9 @@ $background-secondary-alt: hsl(220, calc(var(--saturation-factor, 1)*6.8%), 17.3
 footer {
     background-color: $background-secondary-alt;
 }
+
+.emoji {
+    img {
+        width: 40px;
+    }
+}
