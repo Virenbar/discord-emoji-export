@@ -1,20 +1,12 @@
-.ttt {
-    color: aqua;
-}
-
-$s: #292b2f;
-$s: #292b2f;
+$blue: #5865F2;
+$green: #57F287;
+$yellow: #FEE75C;
+$red: #ED4245;
 
 $background-primary: hsl(220, calc(var(--saturation-factor, 1)*7.7%), 22.9%);
 $background-secondary: hsl(223, calc(var(--saturation-factor, 1)*6.9%), 19.8%);
 $background-secondary-alt: hsl(220, calc(var(--saturation-factor, 1)*6.8%), 17.3%);
 
-footer {
-    background-color: $background-secondary-alt;
-}
 
-.emoji {
-    img {
-        width: 40px;
-    }
-}
+$link-color: $blue;
+$bs-body-bg: $background-primary;

@@ -1,0 +1,12 @@
+@import "custom.scss";
+@import "bootstrap.scss";
+
+footer {
+    background-color: $background-secondary-alt;
+}
+
+.emoji {
+    img {
+        width: 40px;
+    }
+}

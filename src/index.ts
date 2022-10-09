@@ -1,33 +1,33 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-//import "./css/bootstrap.scss";
-//import "./css/custom.scss";
 
-import "@popperjs/core";
+//import "@popperjs/core";
 import "bootstrap";
 
 //import $ from "jquery";
-import { APIUser } from "discord-api-types/v10";
+import { APIEmoji, APIUser } from "discord-api-types/v10";
 import _ from "lodash";
 import ReactDOM from "react-dom/client";
-import { EmojiList, Welcome } from "./components/emoji";
+import { EmojiList } from "./components/EmojiList";
 import D from "./discord";
 
-const t = Welcome({ name: "1234" });
-const Browse = ReactDOM.createRoot(document.getElementById("browse") as HTMLElement);
-Browse.render(t);
+// Variables
+let Guild = { name: "", id: "" };
+let Emojis: APIEmoji[] = [];
 
-/////////////////////
+// Roots
+const Browse = ReactDOM.createRoot(document.getElementById("browse") as HTMLElement);
+
+// Elements
 const Logout = document.getElementById("logout",) as HTMLElement;
-const Guild = document.getElementById("inputGuild") as HTMLSelectElement;
-const Export = document.getElementById("tabs") as HTMLElement;
+const InputGuild = document.getElementById("inputGuild") as HTMLSelectElement;
+const Tabs = document.getElementById("tabs") as HTMLElement;
 
 function Init() {
     Logout.style.display = "none";
-
-    //Export.style.display = "none";
+    Tabs.style.display = "none";
 
     document.querySelector<HTMLButtonElement>("#logout .btn-primary")!.onclick = (e) => {
-        console.log(e.target);
+        e.preventDefault();
         logout();
     };
     document.querySelector<HTMLButtonElement>("#guild button")!.onclick = (e) => {
@@ -35,11 +35,12 @@ function Init() {
         setEmojiList();
     };
 }
+
 function setToken() {
     const token = (<HTMLInputElement>document.getElementById("inputToken")).value;
     const Match = /(\w+\.\w+\.\w+)/.exec(token);
     if (Match?.length) {
-        console.log(Match[0]);
+        console.log("Token matched");
         localStorage.setItem("token", Match[0]);
         console.info("Token saved");
         CheckToken();
@@ -50,7 +51,6 @@ async function CheckToken() {
     try {
         const token = localStorage.getItem("token");
         if (!token) { return; }
-        Logout.style.display = "";
 
         D.setToken(token);
         const user = await D.getMe();
@@ -67,8 +67,11 @@ function setUser(user: APIUser) {
         ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32`
         : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discriminator) % 5}.png?size=32`;
 
+    (Logout.firstElementChild!.children[0] as HTMLImageElement).src = avatar;
+
     document.querySelector<HTMLImageElement>("#logout img")!.src = avatar;
     document.querySelector<HTMLSpanElement>("#logout span")!.textContent = ` ${user.username}#${user.discriminator}`;
+    Logout.style.display = "";
 }
 
 async function setGuildsList() {
@@ -78,36 +81,59 @@ async function setGuildsList() {
     //Guild.length = 0;
     for (const guild of guilds) {
         const O = new Option(guild.name, guild.id);
-        Guild.add(O);
+        InputGuild.add(O);
     }
-    Guild.attributes.removeNamedItem("disabled");
+    InputGuild.attributes.removeNamedItem("disabled");
     document.querySelector("#guild button")!.attributes.removeNamedItem("disabled");
     document.querySelector(".card .card-footer")!.textContent = `${guilds.length} guilds`;
 }
 
 async function setEmojiList() {
-    const index = Guild.selectedIndex;
+    const index = InputGuild.selectedIndex;
     if (!index) { return; }
-    const id = Guild.options[index].value;
-    const emojis = await D.getGuildEmojis(id);
-    console.log(emojis);
-    Browse.render(EmojiList(emojis));
+    Guild = {
+        id: InputGuild.options[index].value,
+        name: InputGuild.options[index].text
+    };
+    Tabs.style.display = "";
+    Emojis = await D.getGuildEmojis(Guild.id);
+    Browse.render(EmojiList(Emojis));
 }
 
 function logout() {
     localStorage.clear();
-    location.href = location.origin;
+    Tabs.style.display = "none";
+    Logout.style.display = "none";
+
+    // location.href = location.origin;
 }
+
+function error(text: string) {
+    console.error(text);
+}
+
+// Event Handlers
+function exportJSON(e: MouseEvent) {
+    console.log(e);
+}
+function exportZIP(e: MouseEvent) {
+    console.log(e);
+}
+
 window.onload = () => {
     Init();
     CheckToken();
 };
 
 window.setToken = setToken;
+window.exportJSON = exportJSON;
+window.exportZIP = exportZIP;
 
 // Global
 declare global {
     interface Window {
         setToken: () => void;
+        exportJSON: (e: MouseEvent) => void
+        exportZIP: (e: MouseEvent) => void
     }
 }

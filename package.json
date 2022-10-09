@@ -17,7 +17,9 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.2",
     "bootswatch": "^5.2.1",
+    "file-saver": "^2.0.5",
     "jquery": "^3.6.1",
+    "jszip": "^3.10.1",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@parcel/transformer-sass": "2.7.0",
     "@types/bootstrap": "^5.2.5",
+    "@types/file-saver": "^2.0.5",
     "@types/jquery": "^3.5.14",
     "@types/lodash": "^4.14.186",
     "@types/react": "^18.0.21",
