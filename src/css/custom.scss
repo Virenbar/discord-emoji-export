@@ -3,10 +3,13 @@ $green: #57F287;
 $yellow: #FEE75C;
 $red: #ED4245;
 
-$background-primary: hsl(220, calc(var(--saturation-factor, 1)*7.7%), 22.9%);
-$background-secondary: hsl(223, calc(var(--saturation-factor, 1)*6.9%), 19.8%);
-$background-secondary-alt: hsl(220, calc(var(--saturation-factor, 1)*6.8%), 17.3%);
-
+$background-primary: hsl(220, 7.7%, 22.9%);
+$background-secondary: hsl(223, 6.9%, 19.8%);
+$background-secondary-alt: hsl(220, 6.8%, 17.3%);
+$background-tertiary: hsl(216, 7.2%, 13.5%);
 
 $link-color: $blue;
-$bs-body-bg: $background-primary;
+$body-bg: $background-secondary-alt;
+
+$card-bg: $background-primary;
+$card-cap-bg: $background-secondary;

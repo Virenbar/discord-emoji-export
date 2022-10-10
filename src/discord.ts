@@ -24,7 +24,8 @@ export default {
         ? `<img src="https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png" />${guild.name}`
         : guild.name,
     emojiID: (emoji: APIEmoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
-    emojiURL: (emoji: APIEmoji) => `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}`
+    emojiURL: (emoji: APIEmoji) => `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}`,
+    emojiName: (emoji: APIEmoji) => `${emoji.name}.${emoji.animated ? "gif" : "png"}`
 };
 
 /*

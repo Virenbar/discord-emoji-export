@@ -2,11 +2,21 @@
 @import "bootstrap.scss";
 
 footer {
-    background-color: $background-secondary-alt;
+    background-color: $background-tertiary;
 }
 
 .emoji {
+    flex: 0 0 auto;
+    min-width: 200px;
+    // outline: var(--borders-night-dark) solid 2px;
+    transition: all 0.3s;
+
+    .card-body {
+        padding: 0.5rem;
+    }
+
     img {
-        width: 40px;
+        height: 40px;
+        margin: 5px;
     }
 }

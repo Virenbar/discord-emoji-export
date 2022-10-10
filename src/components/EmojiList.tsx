@@ -7,7 +7,7 @@ export function EmojiList(emojis: APIEmoji[]) {
         <Emoji key={e.id} {...e} />
     );
     return (
-        <div className="d-flex flex-wrap justify-content-between">
+        <div className="d-flex flex-wrap justify-content-center">
             {list}
         </div>
     );
