@@ -10,10 +10,10 @@
 </head>
 
 <body class="min-vh-100 d-flex flex-column">
-    <main class="mt-3 flex-grow-1 flex-shrink-0">
+    <main class="my-3 flex-grow-1 flex-shrink-0">
         <div class="container overflow-hidden">
 
-            <div class="card text-white bg-dark border-primary mb-3">
+            <div class="card text-white border-primary mb-3">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <!-- Token -->
                     <h4 class="m-0 col-3">Discord Emoji Export</h4>
@@ -26,7 +26,7 @@
                     </div>
                     <div class=" col-3">
                         <div id="logout" class="btn-group float-end">
-                            <button id="user" class="btn btn-dark">
+                            <button id="user" class="btn btn-secondary">
                                 <img class="rounded-circle" height="32" src="https://cdn.discordapp.com/embed/avatars/0.png?size=32">
                                 <span class="align-middle">User#0000</span>
                             </button>
@@ -52,23 +52,22 @@
                     0 guilds
                 </div>
             </div>
-
-            <div id="tabs" class="card">
-                <div class="card-header">
-                    <ul class="nav nav-pills" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#export" aria-selected="true" role="tab">Export</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" data-bs-toggle="tab" href="#browse" aria-selected="false" role="tab" tabindex="-1">Browse</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <div>
+            <div>
+                <div id="tabs" class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-pills" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#export" aria-selected="true" role="tab">Export</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" data-bs-toggle="tab" href="#browse" aria-selected="false" role="tab" tabindex="-1">Browse</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
                         <div id="myTabContent" class="tab-content">
                             <div class="tab-pane fade show active" id="export" role="tabpanel">
-                                <button class="btn btn-primary" onclick="exportJSON()">Export as JSON</button>
+                                <button class="btn btn-primary" onclick="exportJSON()">Download as JSON</button>
                                 <button class="btn btn-primary" onclick="exportZIP()">Download as ZIP</button>
                             </div>
                             <div class="tab-pane fade" id="browse" role="tabpanel">
@@ -77,8 +76,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </main>
 
