@@ -7,24 +7,23 @@ import "bootstrap";
 import { APIEmoji, APIUser } from "discord-api-types/v10";
 import _ from "lodash";
 import ReactDOM from "react-dom/client";
-import { EmojiList } from "./components/EmojiList";
+import { Export } from "./components/Export";
 import D from "./discord";
+import { Guild } from "./models";
 
 // Variables
-let Guild = { name: "", id: "" };
+let Guild: Guild = { name: "", id: "" };
 let Emojis: APIEmoji[] = [];
 
 // Roots
-const Browse = ReactDOM.createRoot(document.getElementById("browse") as HTMLElement);
+const Tabs = ReactDOM.createRoot(document.getElementById("tabs") as HTMLElement);
 
 // Elements
 const Logout = document.getElementById("logout",) as HTMLElement;
 const InputGuild = document.getElementById("inputGuild") as HTMLSelectElement;
-const Tabs = document.getElementById("tabs") as HTMLElement;
 
 function Init() {
     Logout.style.display = "none";
-    Tabs.style.display = "none";
 
     document.querySelector<HTMLButtonElement>("#logout .btn-primary")!.onclick = (e) => {
         e.preventDefault();
@@ -95,14 +94,14 @@ async function setEmojiList() {
         id: InputGuild.options[index].value,
         name: InputGuild.options[index].text
     };
-    Tabs.style.display = "";
+
     Emojis = await D.getGuildEmojis(Guild.id);
-    Browse.render(EmojiList(Emojis));
+    Tabs.render(Export({ guild: Guild, emojis: Emojis }));
 }
 
 function logout() {
     localStorage.clear();
-    Tabs.style.display = "none";
+
     Logout.style.display = "none";
 
     // location.href = location.origin;
@@ -113,27 +112,17 @@ function error(text: string) {
 }
 
 // Event Handlers
-function exportJSON(e: MouseEvent) {
-    console.log(e);
-}
-function exportZIP(e: MouseEvent) {
-    console.log(e);
-}
-
 window.onload = () => {
     Init();
     CheckToken();
 };
 
 window.setToken = setToken;
-window.exportJSON = exportJSON;
-window.exportZIP = exportZIP;
 
 // Global
 declare global {
     interface Window {
         setToken: () => void;
-        exportJSON: (e: MouseEvent) => void
-        exportZIP: (e: MouseEvent) => void
+
     }
 }

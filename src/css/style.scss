@@ -6,10 +6,15 @@ footer {
 }
 
 .emoji {
-    flex: 0 0 auto;
+    flex: 1 0 0;
     min-width: 200px;
+    max-width: 250px;
     // outline: var(--borders-night-dark) solid 2px;
     transition: all 0.3s;
+
+    .card-header {
+        height: 100%;
+    }
 
     .card-body {
         padding: 0.5rem;

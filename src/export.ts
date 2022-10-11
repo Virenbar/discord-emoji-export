@@ -2,6 +2,7 @@ import { APIEmoji } from "discord-api-types/v10";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import D from "./discord";
+import { Guild } from "./models";
 
 export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
     const e = emojis.map(e => {
@@ -45,8 +46,3 @@ export default {
     saveZIP,
     saveImage
 };
-
-interface Guild {
-    name: string
-    id: string
-}

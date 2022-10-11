@@ -1,5 +1,6 @@
-import { APIEmoji, RESTAPIPartialCurrentUserGuild } from "discord-api-types/v10";
+import { APIEmoji } from "discord-api-types/v10";
 import React from "react";
+import { Guild } from "../models";
 import { EmojiList } from "./EmojiList";
 
 export function Export(props: Props) {
@@ -19,11 +20,11 @@ export function Export(props: Props) {
 
             <div className="card-body">
                 <div className="tab-content">
-                    <div className="tab-pane fade show active" role="tabpanel">
+                    <div id="export" className="tab-pane fade show active" role="tabpanel">
                         <button className="btn btn-primary" onClick={exportJSON}>Download as JSON</button>
                         <button className="btn btn-primary" onClick={exportZIP}>Download as ZIP</button>
                     </div>
-                    <div className="tab-pane fade" role="tabpanel">
+                    <div id="browse" className="tab-pane fade" role="tabpanel">
                         <EmojiList {...props.emojis} />
                     </div>
                 </div>
@@ -45,6 +46,6 @@ export function Export(props: Props) {
 }
 
 interface Props {
-    guild: RESTAPIPartialCurrentUserGuild,
+    guild: Guild
     emojis: APIEmoji[]
 }
