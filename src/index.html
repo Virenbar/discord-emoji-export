@@ -47,6 +47,13 @@
                         </select>
                         <button class="btn btn-primary" type="button" disabled>Select</button>
                     </div>
+                    <div class="alert alert-info alert-dismissible fade show">
+                        <p>
+                            JSON contains links to emojis
+                        </p>
+                        hh
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 </div>
                 <div class="card-footer text-muted">
                     0 guilds
@@ -64,6 +71,27 @@
             Source at <a href="https://github.com/Virenbar/discord-emoji-export">GitHub</a>
         </div>
     </footer>
+
+    <div class="toast-container position-fixed bottom-0 ps-3 pb-5">
+        <div id="toastInfo" class="toast text-bg-info" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Bootstrap</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Info Message
+            </div>
+        </div>
+        <div id="toastError" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Error Message
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

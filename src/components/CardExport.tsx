@@ -3,7 +3,7 @@ import React from "react";
 import { Guild } from "../models";
 import { EmojiList } from "./EmojiList";
 
-export function Export(props: Props) {
+export function CardExport(props: Props) {
     const guild = props.guild;
     return (
         <div id="tabs" className="card">
@@ -21,11 +21,17 @@ export function Export(props: Props) {
             <div className="card-body">
                 <div className="tab-content">
                     <div id="export" className="tab-pane fade show active" role="tabpanel">
-                        <button className="btn btn-primary" onClick={exportJSON}>Download as JSON</button>
-                        <button className="btn btn-primary" onClick={exportZIP}>Download as ZIP</button>
+
+                        <button type="button" className="btn btn-primary" onClick={exportJSON}>Download JSON</button>{" "}
+                        <button type="button" className="btn btn-primary" onClick={exportZIP}>Download ZIP</button>
+                        <div className="alert alert-info">
+                            <p>
+                                JSON contains links to emojis
+                            </p>
+                        </div>
                     </div>
                     <div id="browse" className="tab-pane fade" role="tabpanel">
-                        <EmojiList {...props.emojis} />
+                        <EmojiList emojis={props.emojis} />
                     </div>
                 </div>
             </div>

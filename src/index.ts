@@ -7,8 +7,10 @@ import "bootstrap";
 import { APIEmoji, APIUser } from "discord-api-types/v10";
 import _ from "lodash";
 import ReactDOM from "react-dom/client";
-import { Export } from "./components/Export";
+import { CardExport } from "./components/CardExport";
 import D from "./discord";
+import { getElementById, querySelector } from "./helpers/document";
+import Message from "./helpers/message";
 import { Guild } from "./models";
 
 // Variables
@@ -16,21 +18,21 @@ let Guild: Guild = { name: "", id: "" };
 let Emojis: APIEmoji[] = [];
 
 // Roots
-const Tabs = ReactDOM.createRoot(document.getElementById("tabs") as HTMLElement);
+const Tabs = ReactDOM.createRoot(getElementById("tabs"));
 
 // Elements
-const Logout = document.getElementById("logout",) as HTMLElement;
-const InputGuild = document.getElementById("inputGuild") as HTMLSelectElement;
+const Logout = getElementById("logout");
+const InputGuild = getElementById<HTMLSelectElement>("inputGuild");
 
 function Init() {
     Logout.style.display = "none";
 
-    document.querySelector<HTMLButtonElement>("#logout .btn-primary")!.onclick = (e) => {
+    querySelector<HTMLButtonElement>("#logout .btn-primary").onclick = (e) => {
         e.preventDefault();
         logout();
     };
-    document.querySelector<HTMLButtonElement>("#guild button")!.onclick = (e) => {
-        console.info(e.target);
+    querySelector<HTMLButtonElement>("#guild button").onclick = (e) => {
+        e.preventDefault();
         setEmojiList();
     };
 }
@@ -52,19 +54,18 @@ async function CheckToken() {
         if (!token) { return; }
 
         D.setToken(token);
+        Message.info("Token set");
         const user = await D.getMe();
         setUser(user);
 
         await setGuildsList();
     } catch (error) {
-        console.error(error);
+        Message.error(error as Error);
     }
 }
 
 function setUser(user: APIUser) {
-    const avatar = (user.avatar)
-        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32`
-        : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discriminator) % 5}.png?size=32`;
+    const avatar = D.userAvatar(user);
 
     (Logout.firstElementChild!.children[0] as HTMLImageElement).src = avatar;
 
@@ -96,7 +97,7 @@ async function setEmojiList() {
     };
 
     Emojis = await D.getGuildEmojis(Guild.id);
-    Tabs.render(Export({ guild: Guild, emojis: Emojis }));
+    Tabs.render(CardExport({ guild: Guild, emojis: Emojis }));
 }
 
 function logout() {
@@ -105,10 +106,6 @@ function logout() {
     Logout.style.display = "none";
 
     // location.href = location.origin;
-}
-
-function error(text: string) {
-    console.error(text);
 }
 
 // Event Handlers

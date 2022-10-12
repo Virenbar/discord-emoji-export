@@ -1,5 +1,6 @@
 import type {
     APIEmoji,
+    APIUser,
     RESTAPIPartialCurrentUserGuild,
     RESTGetAPICurrentUserGuildsResult,
     RESTGetAPICurrentUserResult,
@@ -15,6 +16,12 @@ async function fetchAPI<T>(path: string) {
     return await response.json() as T;
 }
 
+function userAvatar(user: APIUser) {
+    return (user.avatar)
+        ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=32`
+        : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discriminator) % 5}.png?size=32`;
+}
+
 export default {
     setToken: (token: string) => Token = token,
     getMe: () => fetchAPI<RESTGetAPICurrentUserResult>("users/@me"),
@@ -25,20 +32,7 @@ export default {
         : guild.name,
     emojiID: (emoji: APIEmoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
     emojiURL: (emoji: APIEmoji) => `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}`,
-    emojiName: (emoji: APIEmoji) => `${emoji.name}.${emoji.animated ? "gif" : "png"}`
+    emojiName: (emoji: APIEmoji) => `${emoji.name}.${emoji.animated ? "gif" : "png"}`,
+    userAvatar
 };
 
-/*
-async function getGuildEmojis0(guildID: string) {
-    const emojis = [];
-    const emojisJSON = await fetchAPI<RESTGetAPIGuildEmojisResult>(`guilds/${guildID}/emojis`);
-    for (const emoji of emojisJSON) {
-        const name = emoji.name ?? "";
-        const identifier = `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`;
-        const url = `https://cdn.discordapp.com/emojis/${emoji.id}.${emoji.animated ? "gif" : "png"}`;
-        if (filter.test(name)) {
-            emojis.push({ name, identifier, url });
-        }
-    }
-    return emojis;
-}*/
