@@ -10,7 +10,9 @@ function info(text: string) {
     Toast.showInfo(text);
 }
 
-export default {
+const Message = {
     info,
     error
 };
+
+export default Message; 

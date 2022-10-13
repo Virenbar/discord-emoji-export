@@ -22,7 +22,7 @@ function userAvatar(user: APIUser) {
         : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.discriminator) % 5}.png?size=32`;
 }
 
-export default {
+const Discord = {
     setToken: (token: string) => Token = token,
     getMe: () => fetchAPI<RESTGetAPICurrentUserResult>("users/@me"),
     getGuilds: () => fetchAPI<RESTGetAPICurrentUserGuildsResult>("users/@me/guilds"),
@@ -36,3 +36,4 @@ export default {
     userAvatar
 };
 
+export default Discord;

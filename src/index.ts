@@ -120,6 +120,5 @@ window.setToken = setToken;
 declare global {
     interface Window {
         setToken: () => void;
-
     }
 }

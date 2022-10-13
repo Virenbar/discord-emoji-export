@@ -1,38 +1,74 @@
-import { Toast } from "bootstrap";
-import { getElementById, querySelector } from "./document";
+import { Toast as BToast } from "bootstrap";
+import { querySelector } from "./document";
 
-const Info: TToast = {
-    toast: getElementById("toastInfo"),
-    header: querySelector("#toastInfo .toast-header strong"),
-    body: querySelector("#toastInfo .toast-body")
-};
+const Container = getOrCreateContainer();
 
-const Error: TToast = {
-    toast: getElementById("toastError"),
-    header: querySelector("#toastError .toast-header strong"),
-    body: querySelector("#toastError .toast-body")
-};
+function showToast(title: string, description: string, type: ToastType = "info") {
+    const toast = createToast(title, description, type);
+    Container.appendChild(toast);
 
-function showError(message: string, header = "Error") {
-    Error.header.innerHTML = header;
-    Error.body.innerHTML = message;
-    const toast = new Toast(Error.toast);
-    toast.show();
-}
-function showInfo(message: string, header = "Info") {
-    Info.header.innerHTML = header;
-    Info.body.innerHTML = message;
-    const toast = new Toast(Info.toast);
-    toast.show();
+    toast.addEventListener("hidden.bs.toast", () => toast.remove());
+    const T = new BToast(toast);
+    T.show();
 }
 
-export default {
-    showInfo,
-    showError
-};
+function getOrCreateContainer() {
+    let container = querySelector<HTMLDivElement>("body .toast-container");
 
-interface TToast {
-    toast: HTMLElement
-    header: HTMLElement
-    body: HTMLElement
+    if (!container) {
+        container = document.createElement("div");
+        container.setAttribute("class", "toast-container position-fixed end-0 p-3");
+        document.body.append(container);
+    }
+
+    return container;
+}
+export function createToast(title: string, description: string, type: ToastType = "info") {
+    const toast = document.createElement("div");
+    toast.setAttribute("class", `toast text-bg-${type}`);
+    toast.setAttribute("role", "alert");
+    toast.setAttribute("aria-live", "assertive");
+    toast.setAttribute("aria-atomic", "true");
+
+    // Header
+    const header = document.createElement("div");
+    header.setAttribute("class", "toast-header");
+
+    const strong = document.createElement("strong");
+    strong.setAttribute("class", "me-auto");
+    strong.textContent = title;
+
+    const button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.setAttribute("class", "btn-close");
+    button.setAttribute("data-bs-dismiss", "toast");
+    button.setAttribute("data-label", "Close");
+
+    header.append(strong);
+    header.append(button);
+
+    // Body
+    const body = document.createElement("div");
+    body.setAttribute("class", "toast-body");
+    body.textContent = description;
+
+    toast.append(header);
+    toast.append(body);
+
+    return toast;
+}
+
+const Toast = {
+    showInfo: (description: string, title = "Info") => showToast(title, description, "info"),
+    showWarning: (description: string, title = "Warning") => showToast(title, description, "warning"),
+    showError: (description: string, title = "Error") => showToast(title, description, "error")
+};
+export default Toast;
+
+type ToastType = keyof typeof ToastTypes
+
+enum ToastTypes {
+    "info",
+    "warning",
+    "error"
 }

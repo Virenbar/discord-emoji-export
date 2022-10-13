@@ -41,8 +41,9 @@ export async function saveImage(emoji: APIEmoji) {
     saveAs(image, name);
 }
 
-export default {
+const Export = {
     saveJSON,
     saveZIP,
     saveImage
 };
+export default Export;
