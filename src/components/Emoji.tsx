@@ -2,7 +2,7 @@ import { APIEmoji } from "discord-api-types/v10";
 import React from "react";
 import D from "../discord";
 import Export from "../export";
-import Message from "../helpers/message";
+import Toast from "../helpers/toast";
 
 export function Emoji(props: Props) {
     const id = `<${D.emojiID(props.emoji)}>`;
@@ -26,7 +26,7 @@ export function Emoji(props: Props) {
 
     function copyID() {
         navigator.clipboard.writeText(id);
-        Message.info(`${id} copied`);
+        Toast.showSuccess(`ID: ${id}`, "Emoji ID copied");
     }
 
     function download() {

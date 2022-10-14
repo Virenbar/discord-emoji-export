@@ -19,8 +19,9 @@ export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
         emojis: e
     };
     const name = guild.name.replace(/(\W+)/gi, "-");
-    const json = JSON.stringify(G);
-    saveAs(json, `${name}.json`);
+    const json = JSON.stringify(G, null, 4);
+    const blob = new Blob([json], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, `${name}.json`);
 }
 
 export async function saveZIP(guild: Guild, emojis: APIEmoji[]) {

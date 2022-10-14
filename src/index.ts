@@ -6,23 +6,30 @@ import "bootstrap";
 //import $ from "jquery";
 import { APIEmoji, APIUser } from "discord-api-types/v10";
 import _ from "lodash";
-import ReactDOM from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom";
 import { CardExport } from "./components/CardExport";
 import D from "./discord";
 import { getElementById, querySelector } from "./helpers/document";
 import Message from "./helpers/message";
 import { Guild } from "./models";
 
+const e = React.createElement;
+
 // Variables
 let Guild: Guild = { name: "", id: "" };
 let Emojis: APIEmoji[] = [];
 
-// Roots
-const Tabs = ReactDOM.createRoot(getElementById("tabs"));
-
 // Elements
+const Tabs = getElementById("tabs");
 const Logout = getElementById("logout");
 const InputGuild = getElementById<HTMLSelectElement>("inputGuild");
+
+/*
+ReactDOM.render(
+    React.createElement(e, null, null),
+    Tabs
+    );*/
 
 function Init() {
     Logout.style.display = "none";
@@ -38,7 +45,7 @@ function Init() {
 }
 
 function setToken() {
-    const token = (<HTMLInputElement>document.getElementById("inputToken")).value;
+    const token = (getElementById<HTMLInputElement>("inputToken")).value;
     const Match = /(\w+\.\w+\.\w+)/.exec(token);
     if (Match?.length) {
         console.log("Token matched");
@@ -97,7 +104,9 @@ async function setEmojiList() {
     };
 
     Emojis = await D.getGuildEmojis(Guild.id);
-    Tabs.render(CardExport({ guild: Guild, emojis: Emojis }));
+
+    //Tabs.render(CardExport({ guild: Guild, emojis: Emojis }));
+    ReactDOM.render(React.createElement(CardExport, { guild: Guild, emojis: Emojis }, null), Tabs);
 }
 
 function logout() {

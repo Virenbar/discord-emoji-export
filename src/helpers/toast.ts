@@ -59,16 +59,20 @@ export function createToast(title: string, description: string, type: ToastType 
 }
 
 const Toast = {
+    showSuccess: (description: string, title = "Success") => showToast(title, description, "success"),
     showInfo: (description: string, title = "Info") => showToast(title, description, "info"),
     showWarning: (description: string, title = "Warning") => showToast(title, description, "warning"),
-    showError: (description: string, title = "Error") => showToast(title, description, "error")
+    showError: (description: string, title = "Error") => showToast(title, description, "danger")
 };
 export default Toast;
 
 type ToastType = keyof typeof ToastTypes
 
 enum ToastTypes {
+    "primary",
+    "secondary",
+    "success",
     "info",
     "warning",
-    "error"
+    "danger"
 }
