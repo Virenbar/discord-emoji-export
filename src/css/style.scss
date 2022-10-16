@@ -1,6 +1,10 @@
 @import "custom.scss";
 @import "bootstrap.scss";
 
+body {
+    overflow-y: overlay;
+}
+
 footer {
     background-color: $background-tertiary;
 }

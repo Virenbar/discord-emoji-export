@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-//import "@popperjs/core";
 import "bootstrap";
 
-//import $ from "jquery";
 import { APIEmoji, APIUser } from "discord-api-types/v10";
-import _ from "lodash";
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { CardExport } from "./components/CardExport";
-import D from "./discord";
+import { GuildSelect } from "./components/GuildSelect";
+import Discord from "./discord";
 import { getElementById, querySelector } from "./helpers/document";
 import Message from "./helpers/message";
 import { Guild } from "./models";
@@ -21,15 +19,9 @@ let Guild: Guild = { name: "", id: "" };
 let Emojis: APIEmoji[] = [];
 
 // Elements
-const Tabs = getElementById("tabs");
+const Guilds = ReactDOM.createRoot(getElementById<HTMLSelectElement>("guildSelect"));
+const Tabs = ReactDOM.createRoot(getElementById("tabs"));
 const Logout = getElementById("logout");
-const InputGuild = getElementById<HTMLSelectElement>("inputGuild");
-
-/*
-ReactDOM.render(
-    React.createElement(e, null, null),
-    Tabs
-    );*/
 
 function Init() {
     Logout.style.display = "none";
@@ -38,14 +30,11 @@ function Init() {
         e.preventDefault();
         logout();
     };
-    querySelector<HTMLButtonElement>("#guild button").onclick = (e) => {
-        e.preventDefault();
-        setEmojiList();
-    };
+    Guilds.render(e(GuildSelect, { guilds: [], onSelect: () => null }, null));
 }
 
 function setToken() {
-    const token = (getElementById<HTMLInputElement>("inputToken")).value;
+    const token = getElementById<HTMLInputElement>("inputToken").value;
     const Match = /(\w+\.\w+\.\w+)/.exec(token);
     if (Match?.length) {
         console.log("Token matched");
@@ -60,9 +49,9 @@ async function CheckToken() {
         const token = localStorage.getItem("token");
         if (!token) { return; }
 
-        D.setToken(token);
+        Discord.setToken(token);
         Message.info("Token set");
-        const user = await D.getMe();
+        const user = await Discord.getMe();
         setUser(user);
 
         await setGuildsList();
@@ -72,46 +61,31 @@ async function CheckToken() {
 }
 
 function setUser(user: APIUser) {
-    const avatar = D.userAvatar(user);
+    const avatar = Discord.userAvatar(user);
 
     (Logout.firstElementChild!.children[0] as HTMLImageElement).src = avatar;
 
-    document.querySelector<HTMLImageElement>("#logout img")!.src = avatar;
-    document.querySelector<HTMLSpanElement>("#logout span")!.textContent = ` ${user.username}#${user.discriminator}`;
+    querySelector<HTMLImageElement>("#logout img").src = avatar;
+    querySelector<HTMLSpanElement>("#logout span").textContent = ` ${user.username}#${user.discriminator}`;
     Logout.style.display = "";
 }
 
 async function setGuildsList() {
-    let guilds = await D.getGuilds();
-    guilds = _.sortBy(guilds, g => g.name);
+    const guilds = await Discord.getGuilds();
+    querySelector(".card .card-footer").textContent = `${guilds.length} guilds`;
 
-    //Guild.length = 0;
-    for (const guild of guilds) {
-        const O = new Option(guild.name, guild.id);
-        InputGuild.add(O);
-    }
-    InputGuild.attributes.removeNamedItem("disabled");
-    document.querySelector("#guild button")!.attributes.removeNamedItem("disabled");
-    document.querySelector(".card .card-footer")!.textContent = `${guilds.length} guilds`;
+    Guilds.render(e(GuildSelect, { guilds: guilds, onSelect: setEmojiList }, null));
 }
 
-async function setEmojiList() {
-    const index = InputGuild.selectedIndex;
-    if (!index) { return; }
-    Guild = {
-        id: InputGuild.options[index].value,
-        name: InputGuild.options[index].text
-    };
-
-    Emojis = await D.getGuildEmojis(Guild.id);
-
-    //Tabs.render(CardExport({ guild: Guild, emojis: Emojis }));
-    ReactDOM.render(React.createElement(CardExport, { guild: Guild, emojis: Emojis }, null), Tabs);
+async function setEmojiList(guild: Guild) {
+    console.log(guild);
+    Guild = guild;
+    Emojis = await Discord.getGuildEmojis(Guild.id);
+    Tabs.render(e(CardExport, { guild: Guild, emojis: Emojis }, null));
 }
 
 function logout() {
     localStorage.clear();
-
     Logout.style.display = "none";
 
     // location.href = location.origin;

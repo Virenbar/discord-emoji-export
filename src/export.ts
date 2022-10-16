@@ -1,7 +1,7 @@
 import { APIEmoji } from "discord-api-types/v10";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
-import D from "./discord";
+import Discord from "./discord";
 import { Guild } from "./models";
 
 export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
@@ -9,8 +9,8 @@ export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
         return {
             name: e.name,
             id: e.id,
-            identifier: D.emojiID(e),
-            url: D.emojiURL(e)
+            identifier: Discord.emojiID(e),
+            url: Discord.emojiURL(e)
         };
     });
     const G = {
@@ -26,20 +26,24 @@ export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
 
 export async function saveZIP(guild: Guild, emojis: APIEmoji[]) {
     const name = guild.name.replace(/(\W+)/gi, "-");
+    const requests = emojis.map(e => fetchEmoji(e));
+    const images = await Promise.all(requests);
+
     const ZIP = new JSZip();
-    for (const emoji of emojis) {
-        const name = D.emojiName(emoji);
-        const image = await fetch(D.emojiURL(emoji)).then(r => r.blob());
-        ZIP.file(name, image);
-    }
+    images.forEach(i => ZIP.file(i.name, i.image));
     const A = await ZIP.generateAsync({ type: "blob" });
     saveAs(A, `${name}.zip`);
 }
 
 export async function saveImage(emoji: APIEmoji) {
-    const name = D.emojiName(emoji);
-    const image = await fetch(D.emojiURL(emoji)).then(r => r.blob());
+    const { name, image } = await fetchEmoji(emoji);
     saveAs(image, name);
+}
+
+async function fetchEmoji(emoji: APIEmoji) {
+    const name = Discord.emojiName(emoji);
+    const image = await fetch(Discord.emojiURL(emoji)).then(r => r.blob());
+    return { name, image };
 }
 
 const Export = {

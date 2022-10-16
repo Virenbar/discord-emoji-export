@@ -36,6 +36,8 @@ $body-color: $text-normal;
 // Card
 $card-bg: $background-primary;
 $card-cap-bg: $background-secondary;
+// Modal
+$modal-content-bg: $background-primary;
 
 // Forms
 $input-bg: $channel-text-area-background;
@@ -46,7 +48,12 @@ $input-group-addon-bg: $input-bg ;
 $input-disabled-bg: $input-bg;
 
 $form-select-disabled-bg: $input-bg;
+
 /*
 $form-check-input-bg: $red  !default;
 $form-check-input-border: $green  !default;
 $form-file-button-color: $red  !default;*/
+
+// Alert
+$alert-padding-x: .5rem;
+$alert-padding-y: .5rem;
