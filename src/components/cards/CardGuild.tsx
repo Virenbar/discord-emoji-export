@@ -1,11 +1,12 @@
 import { APIUser, RESTAPIPartialCurrentUserGuild } from "discord-api-types/v10";
 import React, { useState } from "react";
 import Discord from "../../discord";
-import { getElementById } from "../../helpers";
 import Message from "../../helpers/message";
 import { Guild } from "../../models";
 import ClearButton from "../elements/ClearButton";
-import { GuildSelect } from "../GuildSelect";
+import { GuildSelect } from "../elements/GuildSelect";
+import { TokenHelp } from "../elements/TokenHelp";
+import { TokenInput } from "../elements/TokenInput";
 
 export function CardGuild(props: Props) {
     const [state, setState] = useState<State>({ guilds: [] });
@@ -16,20 +17,14 @@ export function CardGuild(props: Props) {
             <div className="card-header d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center">
                     <h4 className="m-0">Discord Emoji Export</h4>
-                    <button type="button" className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#tokenModal">How to get Token</button>
+                    <TokenHelp />
                 </div>
                 <div>
                     <ClearButton user={state.user} onClick={clearToken} />
                 </div>
             </div>
             <div className="card-body">
-                {/* Token */}
-                <div className="input-group my-1">
-                    <span className="input-group-text font-monospace">Token</span>
-                    <input type="text" className="form-control" id="inputToken" placeholder="JWT token..." />
-                    <button className="btn btn-primary" type="button" onClick={setToken}>Set Token</button>
-                </div>
-                {/* Guild Select */}
+                <TokenInput onClick={setToken} />
                 <GuildSelect guilds={state.guilds} onSelect={props.onSelect} />
             </div>
             <div className="card-footer text-muted">
@@ -42,8 +37,7 @@ export function CardGuild(props: Props) {
         CheckToken();
     }
 
-    function setToken() {
-        const token = getElementById<HTMLInputElement>("inputToken").value;
+    function setToken(token: string) {
         const Match = /(\w+\.\w+\.\w+)/.exec(token);
         if (Match?.length) {
             console.log("Token matched");
@@ -82,7 +76,6 @@ interface Props {
 }
 
 interface State {
-    token?: string
     user?: APIUser
     guilds: RESTAPIPartialCurrentUserGuild[]
 }

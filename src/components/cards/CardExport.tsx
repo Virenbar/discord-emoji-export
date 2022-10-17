@@ -7,6 +7,8 @@ import { Guild } from "../../models";
 import { Emoji } from "../Emoji";
 
 export function CardExport(props: Props) {
+    if (!props.guild || !props.emojis) { return null; }
+
     const guild = props.guild;
     const emojis = props.emojis;
     const disabled = emojis.length == 0;
@@ -76,6 +78,6 @@ export function CardExport(props: Props) {
 }
 
 interface Props {
-    guild: Guild
-    emojis: APIEmoji[]
+    guild?: Guild
+    emojis?: APIEmoji[]
 }

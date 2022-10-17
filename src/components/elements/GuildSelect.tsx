@@ -1,7 +1,7 @@
 import { RESTAPIPartialCurrentUserGuild } from "discord-api-types/v10";
 import _ from "lodash";
 import React, { ChangeEvent, useState } from "react";
-import { Guild } from "../models";
+import { Guild } from "../../models";
 
 export function GuildSelect(props: Props) {
     const [guild, setID] = useState<Guild>({ id: "", name: "" });
@@ -17,7 +17,7 @@ export function GuildSelect(props: Props) {
             <select className="form-select" disabled={disabled} onChange={onChange}>
                 {options}
             </select>
-            <button className="btn btn-primary" type="button" disabled={disabled} onClick={select}>Select</button>
+            <button className="btn btn-primary" type="button" disabled={disabled} onClick={() => props.onSelect(guild)}>Select</button>
         </div>
     );
     function onChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -29,11 +29,8 @@ export function GuildSelect(props: Props) {
             name: s.text
         });
     }
-    function select() {
-        props.onSelect(guild);
-    }
-
 }
+
 interface Props {
     guilds: RESTAPIPartialCurrentUserGuild[],
     onSelect: (guild: Guild) => void
