@@ -6,7 +6,7 @@ import { Guild } from "../models";
 export function GuildSelect(props: Props) {
     const [guild, setID] = useState<Guild>({ id: "", name: "" });
 
-    const guilds = _.sortBy(props.guilds, g => g.name);
+    const guilds = _.sortBy(props.guilds, g => g.name.toLowerCase());
     const disabled = guilds.length == 0;
     const options = guilds.map(g => (<option key={g.id} value={g.id}> {g.name}</option>));
     options.unshift(<option key={0}>Choose guild...</option>);

@@ -5,7 +5,7 @@ import "bootstrap";
 import { APIEmoji, APIUser } from "discord-api-types/v10";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { CardExport } from "./components/CardExport";
+import { CardExport } from "./components/cards/CardExport";
 import { GuildSelect } from "./components/GuildSelect";
 import Discord from "./discord";
 import { getElementById, querySelector } from "./helpers/document";

@@ -28,7 +28,25 @@ Site for exporting emojis from any discord server you are in.
 * Select local storage
 * Search for `token` key
 
-![Storage](./static/images/application.png)
+![Application](./static/images/application.png)
+
+## Running locally
+
+1. Clone repository
+
+2. Install depencies
+
+    ```bash
+    yarn
+    ```
+
+3. Build and start server
+
+    ```bash
+    yarn run start
+    ```
+
+4. Open: <http://localhost:8080>
 
 ## JSON format
 

@@ -1,9 +1,10 @@
 import { APIEmoji } from "discord-api-types/v10";
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import Export from "../export";
-import Toast from "../helpers/toast";
-import { Guild } from "../models";
-import { EmojiList } from "./EmojiList";
+import Export from "../../export";
+import Toast from "../../helpers/toast";
+import { Guild } from "../../models";
+import { Emoji } from "../Emoji";
 
 export function CardExport(props: Props) {
     const guild = props.guild;
@@ -12,6 +13,9 @@ export function CardExport(props: Props) {
     const [state, setState] = useState({ zipDisabled: disabled, jsonDisabled: disabled });
     useEffect(() => setState({ zipDisabled: disabled, jsonDisabled: disabled }), [disabled]);
 
+    const list = _.sortBy(props.emojis, e => e.name?.toLowerCase()).map(e =>
+        <Emoji key={e.id} emoji={e} />
+    );
     return (
         <div id="tabs" className="card">
             <div className="card-header d-flex align-items-center">
@@ -20,7 +24,7 @@ export function CardExport(props: Props) {
                         <a className="nav-link active" data-bs-toggle="tab" href="#export" aria-selected="true" role="tab">Download</a>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <a className={"nav-link" + (disabled ? " disabled" : "")} data-bs-toggle="tab" href="#browse" aria-selected="false" role="tab" tabIndex={-1}>Browse</a>
+                        <a className="nav-link" data-bs-toggle="tab" href="#browse" aria-selected="false" role="tab" tabIndex={-1}>Browse</a>
                     </li>
                 </ul>
                 <div className="text-muted ms-auto">
@@ -42,7 +46,9 @@ export function CardExport(props: Props) {
                         </div>
                     </div>
                     <div id="browse" className="tab-pane fade" role="tabpanel">
-                        <EmojiList emojis={emojis} />
+                        <div className="d-flex flex-wrap justify-content-center">
+                            {list}
+                        </div>
                     </div>
                 </div>
             </div>
