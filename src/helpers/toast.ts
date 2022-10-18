@@ -17,7 +17,7 @@ function getOrCreateContainer() {
 
     if (!container) {
         container = document.createElement("div");
-        container.setAttribute("class", "toast-container position-fixed end-0 p-3");
+        container.setAttribute("class", "toast-container position-fixed p-3");
         document.body.append(container);
     }
 

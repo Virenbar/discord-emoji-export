@@ -4,84 +4,49 @@
 <head>
     <meta charset="utf-8" lang="en" />
     <title>Discord Emoji Export</title>
-    <meta description="">
+    <meta description="Site for exporting emojis from any discord server you are in.">
     <link rel="stylesheet" href="css/style.scss" />
-    <script type="module" src="index.ts"></script>
+    <script type="module" src="index.tsx"></script>
     <link type="icon" href="../static/favicon.ico" />
 </head>
 
 <body class="min-vh-100 d-flex flex-column">
-    <main class="my-3 flex-grow-1 flex-shrink-0">
-        <div class="container overflow-hidden">
+    <main id="main" class="my-3 flex-grow-1 flex-shrink-0"></main>
 
-            <div class="card text-white border-primary mb-3">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <h4 class="m-0">Discord Emoji Export</h4>
-                        <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#tokenModal">How to get Token</button>
-                    </div>
-                    <div class="">
-                        <div id="logout" class="btn-group float-end">
-                            <button id="user" class="btn btn-secondary">
-                                <img class="rounded-circle" height="32" src="https://cdn.discordapp.com/embed/avatars/0.png?size=32">
-                                <span class="align-middle">User#0000</span>
-                            </button>
-                            <button class="btn btn-primary">Clear</button>
-                        </div>
-                    </div>
+    <div class="modal fade" id="tokenModal" tabindex="-1" aria-labelledby="tokenHelp" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="tokenHelp">How to get Token</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="card-body">
-                    <!-- Token -->
-                    <div class="input-group my-1">
-                        <span class="input-group-text font-monospace">Token</span>
-                        <input type="text" class="form-control" id="inputToken" placeholder="JWT token...">
-                        <button class="btn btn-primary" type="button" onclick="setToken()">Set Token</button>
-                    </div>
-                    <!-- Guild Select -->
-                    <div id="guildSelect"></div>
-                </div>
-                <div class="card-footer text-muted">
-                    0 guilds
-                </div>
-            </div>
-            <div id="tabs"> </div>
-        </div>
-
-        <div class="modal fade" id="tokenModal" tabindex="-1" aria-labelledby="tokenHelp" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="tokenHelp">How to get Token</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h5> Using network tab</h5>
-                        <p>
-                        <ul>
-                            <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
-                            <li>Switch channel or server in Discord</li>
-                            <li>Go to <strong>Network</strong> tab</li>
-                            <li>Turn on XHR filter</li>
-                            <li>Select any request</li>
-                            <li>Find authorization header</li>
-                        </ul>
-                        <img src="../static/images/network.png">
-                        </p>
-                        <h5> Using application tab (browser only)</h5>
-                        <p>
-                        <ul>
-                            <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
-                            <li>Go to <strong>Application</strong> tab</li>
-                            <li>Select local storage</li>
-                            <li>Search for <span class="badge bg-secondary">token</span> key</li>
-                        </ul>
-                        <img src="../static/images/application.png">
-                        </p>
-                    </div>
+                <div class="modal-body">
+                    <h5> Using network tab</h5>
+                    <p>
+                    <ul>
+                        <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
+                        <li>Switch channel or server in Discord</li>
+                        <li>Go to <strong>Network</strong> tab</li>
+                        <li>Turn on XHR filter</li>
+                        <li>Select any request</li>
+                        <li>Find authorization header</li>
+                    </ul>
+                    <img src="../static/images/network.png">
+                    </p>
+                    <h5> Using application tab (browser only)</h5>
+                    <p>
+                    <ul>
+                        <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
+                        <li>Go to <strong>Application</strong> tab</li>
+                        <li>Select local storage</li>
+                        <li>Search for <span class="badge bg-secondary">token</span> key</li>
+                    </ul>
+                    <img src="../static/images/application.png">
+                    </p>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <footer class="container-fluid py-1 px-4 d-flex justify-content-between font-monospace">
         <div>

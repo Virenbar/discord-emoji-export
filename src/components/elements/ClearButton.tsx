@@ -11,10 +11,10 @@ export default function ClearButton(props: Props) {
     return (
         <div className="btn-group float-end">
             <button className="btn btn-secondary">
-                <img className="rounded-circle" height="32" src={avatar} />
+                <img className="rounded-circle" height="28" src={avatar} />
                 <span className="align-middle">{` ${user.username}#${user.discriminator}`}</span>
             </button>
-            <button className="btn btn-primary" onClick={props.onClick}>Clear</button>
+            <button className="btn btn-primary" onClick={props.onClick}>Clear token</button>
         </div>
     );
 }

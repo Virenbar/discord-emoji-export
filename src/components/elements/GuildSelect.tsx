@@ -9,11 +9,11 @@ export function GuildSelect(props: Props) {
     const guilds = _.sortBy(props.guilds, g => g.name.toLowerCase());
     const disabled = guilds.length == 0;
     const options = guilds.map(g => (<option key={g.id} value={g.id}> {g.name}</option>));
-    options.unshift(<option key={0}>Choose guild...</option>);
+    options.unshift(<option key={0}>Choose server...</option>);
 
     return (
         <div className="input-group mb-3">
-            <label className="input-group-text font-monospace" htmlFor="inputGuild">Guild</label>
+            <label className="input-group-text font-monospace" htmlFor="inputGuild">Server</label>
             <select className="form-select" disabled={disabled} onChange={onChange}>
                 {options}
             </select>

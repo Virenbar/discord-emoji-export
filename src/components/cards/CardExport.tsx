@@ -1,23 +1,20 @@
-import { APIEmoji } from "discord-api-types/v10";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import Export from "../../export";
 import Toast from "../../helpers/toast";
-import { Guild } from "../../models";
-import { Emoji } from "../Emoji";
+import { GuildEmojis } from "../../models";
+import { Button } from "../elements/common/Button";
+import { Emoji } from "../elements/Emoji";
 
-export function CardExport(props: Props) {
-    if (!props.guild || !props.emojis) { return null; }
+export function CardExport(props: GuildEmojis) {
+    const disabled = !props.emojis?.length;
+    const [state, setState] = useState({ zipDisabled: disabled, jsonDisabled: disabled });
+    useEffect(() => setState({ zipDisabled: disabled, jsonDisabled: disabled }), [disabled]);
+    if (!props.guild) { return null; }
 
     const guild = props.guild;
     const emojis = props.emojis;
-    const disabled = emojis.length == 0;
-    const [state, setState] = useState({ zipDisabled: disabled, jsonDisabled: disabled });
-    useEffect(() => setState({ zipDisabled: disabled, jsonDisabled: disabled }), [disabled]);
-
-    const list = _.sortBy(props.emojis, e => e.name?.toLowerCase()).map(e =>
-        <Emoji key={e.id} emoji={e} />
-    );
+    const list = _.sortBy(props.emojis, e => e.name?.toLowerCase()).map(e => <Emoji key={e.id} emoji={e} />);
     return (
         <div id="tabs" className="card">
             <div className="card-header d-flex align-items-center">
@@ -29,17 +26,16 @@ export function CardExport(props: Props) {
                         <a className="nav-link" data-bs-toggle="tab" href="#browse" aria-selected="false" role="tab" tabIndex={-1}>Browse</a>
                     </li>
                 </ul>
-                <div className="text-muted ms-auto">
-                    {`${emojis.length} emojis`}
-                </div>
+                <div className="text-muted ms-auto">{`${emojis.length} emojis`}</div>
             </div>
 
             <div className="card-body">
                 <div className="tab-content">
                     <div id="export" className="tab-pane fade show active" role="tabpanel">
-
-                        <button type="button" className="btn btn-primary" disabled={state.zipDisabled} onClick={exportZIP}>Download ZIP</button>{" "}
-                        <button type="button" className="btn btn-primary" disabled={state.jsonDisabled} onClick={exportJSON}>Download JSON</button>
+                        <Button text="Download ZIP" onClick={exportZIP} disabled={state.zipDisabled} />{" "}
+                        <Button text="Download JSON" onClick={exportJSON} disabled={state.jsonDisabled} />
+                        {/* <button type="button" className="btn btn-primary" disabled={state.zipDisabled} onClick={exportZIP}>Download ZIP</button>{" "} */}
+                        {/* <button type="button" className="btn btn-primary" disabled={state.jsonDisabled} onClick={exportJSON}>Download JSON</button> */}
                         <div className="alert alert-info alert-dismissible fade show mt-1">
                             <span>
                                 JSON contains only links to emojis
@@ -75,9 +71,4 @@ export function CardExport(props: Props) {
         Toast.showSuccess("ZIP archive created");
         setState({ ...state, zipDisabled: false });
     }
-}
-
-interface Props {
-    guild?: Guild
-    emojis?: APIEmoji[]
 }
