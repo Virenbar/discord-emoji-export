@@ -1,42 +1,67 @@
-# Nuxt 3 Minimal Starter
+# discord-emoji-export
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+Site for exporting emojis from any discord server you are in.
 
-## Setup
+## Features
 
-Make sure to install the dependencies:
+* Browse all emojis in server
+* Download all emojis in ZIP archive
+* Download all emojis as JSON (with links to emojis)
 
-```bash
-# yarn
-yarn install
+## How to get Discord token
 
-# npm
-npm install
+### Using network tab
 
-# pnpm
-pnpm install --shamefully-hoist
+* Open development console (`F12` or `Ctrl + Shift + I`)
+* Switch channel or server
+* Go to Network tab
+* Turn on XHR filter
+* Select any request
+* Find authorization header
+
+![Network](./static/images/network.png)
+
+### Using application tab (browser only)
+
+* Open development console (`F12` or `Ctrl + Shift + I`)
+* Go to Application tab
+* Select local storage
+* Search for `token` key
+
+![Application](./static/images/application.png)
+
+## Running locally
+
+1. Clone repository
+
+2. Install depencies
+
+    ```bash
+    yarn
+    ```
+
+3. Build and start server
+
+    ```bash
+    yarn run start
+    ```
+
+4. Open: <http://localhost:8080>
+
+## JSON format
+
+```json
+{
+    "guildName": "<name>",
+    "guildID": "<id>",
+    "emojis": [
+        {
+            "name": "<name>",
+            "id": "<id>",
+            "identifier": "<a?>:<name>:<id>",
+            "url": "https://cdn.discordapp.com/emojis/<id>.<png|gif>"
+        },
+        ...
+}
+
 ```
-
-## Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.

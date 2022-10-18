@@ -1,0 +1,32 @@
+@import "variables.scss";
+@import "bootstrap.scss";
+
+body {
+    overflow-y: overlay;
+}
+
+footer {
+    background-color: $background-tertiary;
+    font-family: $font-family-code;
+}
+
+.emoji {
+    flex: 1 0 0;
+    min-width: 200px;
+    max-width: 250px;
+    // outline: var(--borders-night-dark) solid 2px;
+    transition: all 0.3s;
+
+    .card-header {
+        height: 100%;
+    }
+
+    .card-body {
+        padding: 0.5rem;
+    }
+
+    img {
+        height: 40px;
+        margin: 5px;
+    }
+}

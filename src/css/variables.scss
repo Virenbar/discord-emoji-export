@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Fira+Mono:wght@400;500;700&display=swap');
+// Discord Colors
+$text-normal: hsl(210, 2.9%, 86.7%);
+$text-muted: hsl(214, 4%, 65.3%);
+$text-link: hsl(197, 100%, 47.8%);
+
+$background-primary: hsl(220, 7.7%, 22.9%);
+$background-secondary: hsl(223, 6.9%, 19.8%);
+$background-secondary-alt: hsl(220, 6.8%, 17.3%);
+$background-tertiary: hsl(216, 7.2%, 13.5%);
+
+$button-secondary-background: hsl(217, 7.6%, 33.5%);
+$button-secondary-background-hover: hsl(213, 5%, 42.9%);
+$button-secondary-background-active: hsl(218, 4.6%, 46.9%);
+
+$channel-text-area-placeholder: hsl(218, 4.6%, 46.9%);
+$channel-text-area-background: hsl(218, 7.9%, 27.3%);
+
+// Bootstrap
+// Colors
+$blue: #5865F2;
+$green: #57F287;
+$yellow: #FEE75C;
+$fuchsia: #EB459E;
+$red: #ED4245;
+$white: #FFF;
+$black: #000;
+$secondary: $button-secondary-background;
+
+// Fonts
+$font-family-monospace: 'Fira Mono';
+
+// Links
+$link-color: $text-link;
+
+// Body
+$body-bg: $background-secondary-alt;
+$body-color: $text-normal;
+
+// Card
+$card-bg: $background-primary;
+$card-cap-bg: $background-secondary;
+// Modal
+$modal-content-bg: $background-primary;
+
+// Forms
+$input-bg: $channel-text-area-background;
+$input-color: $text-normal;
+$input-border-color: $background-tertiary ;
+$input-group-addon-color: $text-muted ;
+$input-group-addon-bg: $input-bg ;
+$input-disabled-bg: $input-bg;
+
+$form-select-disabled-bg: $input-bg;
+
+/*
+$form-check-input-bg: $red  !default;
+$form-check-input-border: $green  !default;
+$form-file-button-color: $red  !default;*/
+
+// Alert
+$alert-padding-x: .5rem;
+$alert-padding-y: .5rem;

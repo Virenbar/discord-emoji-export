@@ -1,13 +1,46 @@
 {
-  "private": true,
+  "name": "discord-emoji-export",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Virenbar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Virenbar/discord-emoji-export.git"
+  },
+  "source": "src/index.html",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "start": "parcel -p 8080",
+    "build": "parcel build"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "bootstrap": "^5.2.2",
+    "file-saver": "^2.0.5",
+    "jquery": "^3.6.1",
+    "jszip": "^3.10.1",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "nuxt": "3.0.0-rc.11"
-  }
+    "@parcel/transformer-sass": "2.7.0",
+    "@types/bootstrap": "^5.2.5",
+    "@types/file-saver": "^2.0.5",
+    "@types/jquery": "^3.5.14",
+    "@types/lodash": "^4.14.186",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "buffer": "^6.0.3",
+    "discord-api-types": "^0.37.11",
+    "eslint": "^8.24.0",
+    "eslint-plugin-import": "^2.26.0",
+    "parcel": "^2.7.0",
+    "process": "^0.11.10",
+    "typescript": "^4.8.4"
+  },
+  "type": "module",
+  "private": true
 }
