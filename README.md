@@ -61,7 +61,7 @@ Site for exporting emojis from any discord server you are in.
             "identifier": "<a?>:<name>:<id>",
             "url": "https://cdn.discordapp.com/emojis/<id>.<png|gif>"
         },
-        ...
+    ]
 }
 
 ```

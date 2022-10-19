@@ -1,6 +1,6 @@
 {
   "name": "discord-emoji-export",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "author": "Virenbar",
   "license": "MIT",
@@ -11,7 +11,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel -p 8080",
-    "build": "parcel build"
+    "build": "parcel build --public-url ./"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",

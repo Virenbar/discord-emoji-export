@@ -32,13 +32,10 @@ function userAvatar(user: APIUser) {
         : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(d)}?size=32`;
 }
 
-/**
- * @deprecated
- */
 function guildIcon(guild: RESTAPIPartialCurrentUserGuild) {
     return (guild.icon)
-        ? ` <img src="${RouteBases.cdn}/icons/${guild.id}/${guild.icon}.png" />${guild.name}`
-        : guild.name;
+        ? `${RouteBases.cdn}${CDNRoutes.guildIcon(guild.id, guild.icon, ImageFormat.PNG)}?size=32`
+        : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(0)}?size=32`;
 }
 
 const Discord = {

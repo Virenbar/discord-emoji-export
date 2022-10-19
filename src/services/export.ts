@@ -5,7 +5,7 @@ import { Guild } from "../models";
 import Discord from "./discord";
 
 export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
-    const e = emojis.map(e => {
+    const emojisJSON = emojis.map(e => {
         return {
             name: e.name,
             id: e.id,
@@ -13,13 +13,13 @@ export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
             url: Discord.emojiURL(e)
         };
     });
-    const G = {
+    const guildJSON = {
         guildName: guild.name,
         guildID: guild.id,
-        emojis: e
+        emojis: emojisJSON
     };
     const name = guild.name.replace(/(\W+)/gi, "-");
-    const json = JSON.stringify(G, null, 4);
+    const json = JSON.stringify(guildJSON, null, 4);
     const blob = new Blob([json], { type: "text/plain;charset=utf-8" });
     saveAs(blob, `${name}.json`);
 }
