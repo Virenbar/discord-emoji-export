@@ -1,8 +1,8 @@
 import { APIEmoji } from "discord-api-types/v10";
 import React from "react";
-import D from "../../discord";
-import Export from "../../export";
 import Toast from "../../helpers/toast";
+import D from "../../services/discord";
+import Export from "../../services/export";
 
 export function Emoji(props: Props) {
     const emoji = props.emoji;

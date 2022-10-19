@@ -1,8 +1,8 @@
 import { APIEmoji } from "discord-api-types/v10";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
+import { Guild } from "../models";
 import Discord from "./discord";
-import { Guild } from "./models";
 
 export function saveJSON(guild: Guild, emojis: APIEmoji[]) {
     const e = emojis.map(e => {

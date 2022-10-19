@@ -1,8 +1,8 @@
 import { APIUser, RESTAPIPartialCurrentUserGuild } from "discord-api-types/v10";
 import React, { useState } from "react";
-import Discord from "../../discord";
 import Toast from "../../helpers/toast";
 import { Guild } from "../../models";
+import Discord from "../../services/discord";
 import ClearButton from "../elements/ClearButton";
 import { GuildSelect } from "../elements/GuildSelect";
 import { TokenInput } from "../elements/TokenInput";

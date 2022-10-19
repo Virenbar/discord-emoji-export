@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { CardExport } from "./components/cards/CardExport";
 import { CardGuild } from "./components/cards/CardGuild";
-import Discord from "./discord";
 import { getElementById } from "./helpers/document";
 import { Guild, GuildEmojis } from "./models";
+import Discord from "./services/discord";
 
 function Main() {
     const [state, setState] = useState<GuildEmojis>({ emojis: [] });

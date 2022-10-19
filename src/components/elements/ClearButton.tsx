@@ -1,6 +1,6 @@
 import { APIUser } from "discord-api-types/v10";
 import React from "react";
-import Discord from "../../discord";
+import Discord from "../../services/discord";
 
 export default function ClearButton(props: Props) {
     const user = props.user;

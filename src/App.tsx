@@ -2,8 +2,8 @@ import { APIEmoji } from "discord-api-types/v10";
 import React, { useState } from "react";
 import { CardExport } from "./components/cards/CardExport";
 import { CardGuild } from "./components/cards/CardGuild";
-import Discord from "./discord";
 import { Guild } from "./models";
+import Discord from "./services/discord";
 
 export default function App() {
 
