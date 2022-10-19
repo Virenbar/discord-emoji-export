@@ -1,9 +1,12 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
+import { HandleError } from "../../helpers";
 import Toast from "../../helpers/toast";
 import { GuildData } from "../../models";
 import Export from "../../services/export";
+import { AlertDownload } from "../elements/alerts/AlertDownload";
 import { Button } from "../elements/common/Button";
+import { ButtonLabel } from "../elements/common/ButtonLabel";
 import { Emoji } from "../elements/Emoji";
 import { Sticker } from "../elements/Sticker";
 
@@ -15,8 +18,7 @@ export function CardExport(props: GuildData) {
     if (!props.guild) { return null; }
 
     const guild = props.guild;
-    const emojis = props.emojis;
-    const list = _.sortBy(props.emojis, e => e.name?.toLowerCase()).map(e => <Emoji key={e.id} emoji={e} />);
+    const emojis = _.sortBy(props.emojis, e => e.name?.toLowerCase()).map(e => <Emoji key={e.id} emoji={e} />);
     const stickers = _.sortBy(props.stickers, e => e.name.toLowerCase()).map(e => <Sticker key={e.id} sticker={e} />);
     return (
         <div className="card">
@@ -34,33 +36,25 @@ export function CardExport(props: GuildData) {
                 </ul>
                 <div className="text-muted ms-auto">{`${emojis.length} emojis - ${stickers.length} stickers`}</div>
             </div>
-
             <div className="card-body">
                 <div className="tab-content">
-
                     <div id="export" className="tab-pane fade show active" role="tabpanel">
                         <div className="d-flex">
                             <div className="btn-group me-1">
-                                <button className="btn btn-secondary disabled">Emojis</button>
+                                <ButtonLabel text="Emojis" />
                                 <Button text="Download ZIP" onClick={exportEmojisZIP} disabled={!buttons.emojiZIP} />
                                 <Button text="Download JSON" onClick={exportEmojisJSON} disabled={!buttons.emojiJSON} />
                             </div>
                             <div className="btn-group">
-                                <button className="btn btn-secondary disabled">Stickers</button>
-                                <Button text="Download ZIP" onClick={exportStickersZIP} disabled={!buttons.emojiZIP} />
+                                <ButtonLabel text="Stickers" />
+                                <Button text="Download ZIP" onClick={exportStickersZIP} disabled={!buttons.stickerZIP} />
                             </div>
                         </div>
-                        <div className="alert alert-info alert-dismissible fade show mt-1">
-                            <span>
-                                JSON contains only links to emojis
-                            </span>
-                            <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                        <AlertDownload />
                     </div>
-
                     <div id="browse" className="tab-pane fade" role="tabpanel">
                         <div className="d-flex flex-wrap justify-content-center">
-                            {list}
+                            {emojis}
                         </div>
                     </div>
                     <div id="sticker-browse" className="tab-pane fade" role="tabpanel">
@@ -68,7 +62,6 @@ export function CardExport(props: GuildData) {
                             {stickers}
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -76,34 +69,39 @@ export function CardExport(props: GuildData) {
 
     function exportEmojisJSON() {
         console.log("Generating JSON");
-        setButtons({ ...buttons, emojiJSON: true });
-
-        Export.saveEmojiJSON(guild, emojis);
-        Toast.showSuccess("JSON generated");
-
         setButtons({ ...buttons, emojiJSON: false });
+
+        Export.saveEmojiJSON(guild, props.emojis);
+        Toast.showSuccess("JSON generated");
+        setButtons({ ...buttons, emojiJSON: true });
     }
 
     async function exportEmojisZIP() {
         console.log("Generating ZIP");
-        setButtons({ ...buttons, emojiZIP: true });
-
-        Toast.showInfo("Creating ZIP archive");
-        await Export.saveEmojiZIP(guild, emojis);
-
-        Toast.showSuccess("ZIP archive created");
-        setButtons({ ...buttons, emojiZIP: false });
+        try {
+            setButtons({ ...buttons, emojiZIP: false });
+            Toast.showInfo("Creating ZIP archive");
+            await Export.saveEmojiZIP(guild, props.emojis);
+            Toast.showSuccess("ZIP archive created");
+        } catch (error) {
+            HandleError(error);
+        } finally {
+            setButtons({ ...buttons, emojiZIP: true });
+        }
     }
 
     async function exportStickersZIP() {
         console.log("Generating ZIP");
-        setButtons({ ...buttons, stickerZIP: true });
-
-        Toast.showInfo("Creating ZIP archive");
-        await Export.saveStickerZIP(guild, props.stickers);
-
-        Toast.showSuccess("ZIP archive created");
-        setButtons({ ...buttons, stickerZIP: false });
+        try {
+            setButtons({ ...buttons, stickerZIP: false });
+            Toast.showInfo("Creating ZIP archive");
+            await Export.saveStickerZIP(guild, props.stickers);
+            Toast.showSuccess("ZIP archive created");
+        } catch (error) {
+            HandleError(error);
+        } finally {
+            setButtons({ ...buttons, stickerZIP: true });
+        }
     }
 }
 

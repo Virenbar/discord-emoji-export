@@ -28,10 +28,10 @@ async function fetchAPI<T>(path: string) {
 }
 
 function userAvatar(user: APIUser) {
-    const d = parseInt(user.discriminator) % 5 as DefaultUserAvatarAssets;
+    const discriminator = parseInt(user.discriminator) % 5 as DefaultUserAvatarAssets;
     return (user.avatar)
         ? `${RouteBases.cdn}${CDNRoutes.userAvatar(user.id, user.avatar, ImageFormat.PNG)}?size=32`
-        : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(d)}?size=32`;
+        : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(discriminator)}?size=32`;
 }
 
 function guildIcon(guild: RESTAPIPartialCurrentUserGuild) {

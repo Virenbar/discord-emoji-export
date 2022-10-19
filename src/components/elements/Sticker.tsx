@@ -1,12 +1,12 @@
 import { APISticker } from "discord-api-types/v10";
 import React from "react";
-import Toast from "../../helpers/toast";
-import D from "../../services/discord";
+import { HandleError } from "../../helpers";
+import Discord from "../../services/discord";
 import Export from "../../services/export";
 
 export function Sticker(props: Props) {
     const sticker = props.sticker;
-    const url = D.stickerURL(sticker);
+    const url = Discord.stickerURL(sticker);
     return (
         <div className="sticker card m-1 border-primary">
             <div className="card-header text-center">
@@ -27,10 +27,7 @@ export function Sticker(props: Props) {
         try {
             await Export.saveSticker(sticker);
         } catch (e) {
-            console.log(e);
-            if (e instanceof Error) {
-                Toast.showError(Error.name);
-            }
+            HandleError(e);
         }
     }
 }

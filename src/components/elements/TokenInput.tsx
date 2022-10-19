@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export function TokenInput(props: Props) {
     const [token, setToken] = useState("");
     return (
-        <div className="input-group my-1">
+        <div className="input-group mb-1">
             <span className="input-group-text font-monospace">Token&nbsp;</span>
             <input
                 type="text" className="form-control"

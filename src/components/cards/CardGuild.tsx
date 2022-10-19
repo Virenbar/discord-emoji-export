@@ -1,12 +1,13 @@
 import { APIUser, RESTAPIPartialCurrentUserGuild } from "discord-api-types/v10";
 import React, { useState } from "react";
+import { HandleError } from "../../helpers";
 import Toast from "../../helpers/toast";
 import { Guild } from "../../models";
 import Discord from "../../services/discord";
+import { AlertToken } from "../elements/alerts/AlertToken";
 import ClearButton from "../elements/ClearButton";
 import { GuildSelect } from "../elements/GuildSelect";
 import { TokenInput } from "../elements/TokenInput";
-import { TokenWarning } from "../elements/TokenWarning";
 
 export function CardGuild(props: Props) {
     const [state, setState] = useState<State>({ guilds: [] });
@@ -26,7 +27,7 @@ export function CardGuild(props: Props) {
             <div className="card-body">
                 <TokenInput onClick={setToken} />
                 <GuildSelect guilds={state.guilds} onSelect={props.onSelect} />
-                <TokenWarning />
+                <AlertToken />
             </div>
             <div className="card-footer text-muted">
                 <div className="float-end">
@@ -61,18 +62,14 @@ export function CardGuild(props: Props) {
     }
 
     async function initDiscord(token: string) {
-
         try {
             Discord.setToken(token);
             const user = await Discord.getMe();
             const guilds = await Discord.getGuilds();
             localStorage.setItem("token", token);
             setState({ user, guilds });
-        } catch (e) {
-            console.error(e);
-            if (e instanceof Error) {
-                Toast.showError(e.message, e.name);
-            } else { Toast.showError(`${e}`); }
+        } catch (error) {
+            HandleError(error);
         }
     }
 

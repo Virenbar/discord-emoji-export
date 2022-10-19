@@ -1,12 +1,11 @@
-
 import React from "react";
 
-export function TokenWarning() {
+export function AlertToken() {
     return (
-        <div className="alert alert-warning alert-dismissible fade show mt-1">
+        <div className="alert alert-warning alert-dismissible fade show my-1">
             <span>
                 <strong>Warning: do not share your token with anyone!</strong><br />
-                This site uses your token only to authenticate with Discord, fetch your server list and their emojis.<br />
+                This site uses your token only to authenticate with Discord, fetch your server list and their emojis and stickers.<br />
                 Token is saved locally. Clear it after you done.
             </span>
             <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

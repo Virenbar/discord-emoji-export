@@ -65,7 +65,14 @@ async function saveSticker(sticker: APISticker) {
 }
 async function fetchSticker(sticker: APISticker) {
     const name = Discord.stickerName(sticker);
-    const image = await fetch(Discord.stickerURL(sticker)).then(r => r.blob());
+
+    // TODO Replace cors proxy with cf worker
+    //const image = await fetch(Discord.stickerURL(sticker)).then(r => r.blob());
+    const url = (process.env.NODE_ENV === "development")
+        ? `https://api.allorigins.win/raw?url=${Discord.stickerURL(sticker)}`
+        : `https://api.allorigins.win/raw?url=${Discord.stickerURL(sticker)}`;
+    const image = await fetch(url).then(r => r.blob());
+
     return { name, image };
 }
 

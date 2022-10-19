@@ -1,12 +1,14 @@
 # discord-emoji-export
 
-Site for exporting emojis from any discord server you are in.
+Site for exporting emojis and stickers from any discord server you are in.
 
 ## Features
 
-* Browse all emojis in server
-* Download all emojis in ZIP archive
-* Download all emojis as JSON (with links to emojis)
+* Browse emojis in server
+* Browse stickers in server (except lottie)
+* Download emojis in ZIP archive
+* Download stickers in ZIP archive
+* Export emojis as JSON (with links to emojis)
 
 ## How to get Discord token
 
