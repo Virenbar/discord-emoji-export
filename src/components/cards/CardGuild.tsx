@@ -29,7 +29,9 @@ export function CardGuild(props: Props) {
                 <TokenWarning />
             </div>
             <div className="card-footer text-muted">
-                {state.guilds.length} servers
+                <div className="float-end">
+                    {state.guilds.length} servers
+                </div>
             </div>
         </div>
     );
