@@ -14,7 +14,6 @@ footer {
     flex: 1 0 0;
     min-width: 200px;
     max-width: 250px;
-    // outline: var(--borders-night-dark) solid 2px;
     transition: all 0.3s;
 
     .card-header {
@@ -23,10 +22,39 @@ footer {
 
     .card-body {
         padding: 0.5rem;
+
+        div:nth-child(1) {
+            height: 40px;
+            margin: 0 0 5px 0;
+
+            img {
+                max-height: 40px;
+            }
+        }
+    }
+}
+
+.sticker {
+    flex: 1 0 0;
+    min-width: 200px;
+    max-width: 250px;
+    transition: all 0.3s;
+
+    .card-header {
+        height: 100%;
     }
 
-    img {
-        height: 40px;
-        margin: 5px;
+    .card-body {
+        padding: 0.5rem;
+
+        div {
+            height: 128px;
+            margin: 0 0 5px 0;
+
+            img {
+                max-height: 128px;
+            }
+        }
     }
+
 }

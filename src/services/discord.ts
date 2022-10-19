@@ -1,5 +1,6 @@
 import {
     APIEmoji,
+    APISticker,
     APIUser,
     CDNRoutes,
     DefaultUserAvatarAssets,
@@ -9,6 +10,7 @@ import {
     RESTGetAPICurrentUserGuildsResult,
     RESTGetAPICurrentUserResult,
     RESTGetAPIGuildEmojisResult,
+    RESTGetAPIGuildStickersResult,
     RouteBases,
     Routes
 } from "discord-api-types/v10";
@@ -26,10 +28,10 @@ async function fetchAPI<T>(path: string) {
 }
 
 function userAvatar(user: APIUser) {
-    const d = parseInt(user.discriminator) % 5 as DefaultUserAvatarAssets;
+    const discriminator = parseInt(user.discriminator) % 5 as DefaultUserAvatarAssets;
     return (user.avatar)
         ? `${RouteBases.cdn}${CDNRoutes.userAvatar(user.id, user.avatar, ImageFormat.PNG)}?size=32`
-        : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(d)}?size=32`;
+        : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(discriminator)}?size=32`;
 }
 
 function guildIcon(guild: RESTAPIPartialCurrentUserGuild) {
@@ -43,9 +45,12 @@ const Discord = {
     getMe: () => fetchAPI<RESTGetAPICurrentUserResult>(Routes.user("@me")),
     getGuilds: () => fetchAPI<RESTGetAPICurrentUserGuildsResult>(Routes.userGuilds()),
     getGuildEmojis: (guildID: string) => fetchAPI<RESTGetAPIGuildEmojisResult>(Routes.guildEmojis(guildID)),
+    getGuildStickers: (guildID: string) => fetchAPI<RESTGetAPIGuildStickersResult>(Routes.guildStickers(guildID)),
     emojiID: (emoji: APIEmoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
     emojiURL: (emoji: APIEmoji) => `${RouteBases.cdn}${CDNRoutes.emoji(emoji.id ?? "", emoji.animated ? ImageFormat.GIF : ImageFormat.PNG)}`,
     emojiName: (emoji: APIEmoji) => `${emoji.name}.${emoji.animated ? "gif" : "png"}`,
+    stickerURL: (sticker: APISticker) => `${RouteBases.cdn}${CDNRoutes.sticker(sticker.id, ImageFormat.PNG)}`,
+    stickerName: (sticker: APISticker) => `${sticker.name}.png`,
     guildIcon,
     userAvatar
 };
