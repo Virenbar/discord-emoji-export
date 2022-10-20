@@ -67,3 +67,7 @@ Site for exporting emojis and stickers from any discord server you are in.
 }
 
 ```
+
+## CORS proxy
+
+Site uses [CORS proxy](https://github.com/Virenbar/cloudflare-cors-proxy) for stickers

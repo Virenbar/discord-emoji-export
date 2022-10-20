@@ -4,6 +4,22 @@ import JSZip from "jszip";
 import { Guild } from "../models";
 import Discord from "./discord";
 
+// Public CORS proxy
+const CORS_public = "https://api.allorigins.win/raw?url=";
+
+// Private CORS proxy
+// Only works for whitelisted domains
+const CORS_private = "https://cors.virenbar.workers.dev/?url=";
+
+async function saveZIP(guild: Guild, images: Image[]) {
+    const name = guild.name.replace(/(\W+)/gi, "-");
+
+    const ZIP = new JSZip();
+    images.forEach(i => ZIP.file(i.name, i.image));
+    const A = await ZIP.generateAsync({ type: "blob" });
+    saveAs(A, `${name}.zip`);
+}
+
 //#region Emoji
 function saveEmojiJSON(guild: Guild, emojis: APIEmoji[]) {
     const emojisJSON = emojis.map(e => {
@@ -26,14 +42,9 @@ function saveEmojiJSON(guild: Guild, emojis: APIEmoji[]) {
 }
 
 async function saveEmojiZIP(guild: Guild, emojis: APIEmoji[]) {
-    const name = guild.name.replace(/(\W+)/gi, "-");
     const requests = emojis.map(e => fetchEmoji(e));
     const images = await Promise.all(requests);
-
-    const ZIP = new JSZip();
-    images.forEach(i => ZIP.file(i.name, i.image));
-    const A = await ZIP.generateAsync({ type: "blob" });
-    saveAs(A, `${name}.zip`);
+    saveZIP(guild, images);
 }
 
 async function saveEmoji(emoji: APIEmoji) {
@@ -50,14 +61,9 @@ async function fetchEmoji(emoji: APIEmoji) {
 
 //#region Sticker
 async function saveStickerZIP(guild: Guild, stickers: APISticker[]) {
-    const name = guild.name.replace(/(\W+)/gi, "-");
     const requests = stickers.map(e => fetchSticker(e));
     const images = await Promise.all(requests);
-
-    const ZIP = new JSZip();
-    images.forEach(i => ZIP.file(i.name, i.image));
-    const A = await ZIP.generateAsync({ type: "blob" });
-    saveAs(A, `${name}.zip`);
+    saveZIP(guild, images);
 }
 async function saveSticker(sticker: APISticker) {
     const { name, image } = await fetchSticker(sticker);
@@ -66,13 +72,12 @@ async function saveSticker(sticker: APISticker) {
 async function fetchSticker(sticker: APISticker) {
     const name = Discord.stickerName(sticker);
 
-    // TODO Replace cors proxy with cf worker
-    //const image = await fetch(Discord.stickerURL(sticker)).then(r => r.blob());
-    const url = (process.env.NODE_ENV === "development")
-        ? `https://api.allorigins.win/raw?url=${Discord.stickerURL(sticker)}`
-        : `https://api.allorigins.win/raw?url=${Discord.stickerURL(sticker)}`;
+    // stickers endpoint has no "Access-Control-Allow-Origin" header
+    // const image = await fetch(Discord.stickerURL(sticker)).then(r => r.blob());
+    const url = (process.env.NODE_ENV === "production")
+        ? `${CORS_private}${Discord.stickerURL(sticker)}`
+        : `${CORS_public}${Discord.stickerURL(sticker)}`;
     const image = await fetch(url).then(r => r.blob());
-
     return { name, image };
 }
 
@@ -87,3 +92,8 @@ const Export = {
 };
 
 export default Export;
+
+interface Image {
+    name: string
+    image: Blob
+}
