@@ -1,5 +1,4 @@
 import { APIUser } from "discord-api-types/v10";
-import React from "react";
 import Discord from "../../services/discord";
 
 export default function ClearButton(props: Props) {
@@ -9,12 +8,12 @@ export default function ClearButton(props: Props) {
     const avatar = Discord.userAvatar(user);
 
     return (
-        <div className="btn-group float-end">
-            <button className="btn btn-secondary">
-                <img className="rounded-circle" height="28" src={avatar} />
-                <span className="align-middle">{` ${user.username}#${user.discriminator}`}</span>
+        <div class="btn-group float-end">
+            <button class="btn btn-secondary">
+                <img class="rounded-circle" height="28" src={avatar} />
+                <span class="align-middle">{` ${user.username}#${user.discriminator}`}</span>
             </button>
-            <button className="btn btn-primary" onClick={props.onClick}>Clear token</button>
+            <button class="btn btn-primary" onClick={props.onClick}>Clear token</button>
         </div>
     );
 }
