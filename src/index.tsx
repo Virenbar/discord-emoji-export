@@ -1,7 +1,7 @@
 import "bootstrap";
 
-import React, { useState } from "react";
-import ReactDOM from "react-dom/client";
+import { render } from "preact";
+import { useState } from "preact/hooks";
 import { CardExport } from "./components/cards/CardExport";
 import { CardGuild } from "./components/cards/CardGuild";
 import { getElementById } from "./helpers/document";
@@ -30,5 +30,4 @@ function Main() {
     }
 }
 
-const Root = ReactDOM.createRoot(getElementById("main"));
-Root.render(<Main />);
+render(<Main />, getElementById("main"));

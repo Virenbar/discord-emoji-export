@@ -1,5 +1,5 @@
 import _ from "lodash";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "preact/hooks";
 import { HandleError } from "../../helpers";
 import Toast from "../../helpers/toast";
 import { GuildData } from "../../models";
@@ -21,11 +21,11 @@ export function CardExport(props: GuildData) {
     const emojis = _.sortBy(props.emojis, e => e.name?.toLowerCase()).map(e => <Emoji key={e.id} emoji={e} />);
     const stickers = _.sortBy(props.stickers, e => e.name.toLowerCase()).map(e => <Sticker key={e.id} sticker={e} />);
     return (
-        <div className="card">
-            <div className="card-header d-flex align-items-center">
-                <ul className="nav nav-pills" role="tablist">
-                    <li className="nav-item" role="presentation">
-                        <a className="nav-link active" data-bs-toggle="tab" href="#export" aria-selected="true" role="tab">Download</a>
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#export" aria-selected="true" role="tab">Download</a>
                     </li>
                     <li className="nav-item" role="presentation">
                         <a className="nav-link" data-bs-toggle="tab" href="#browse" aria-selected="false" role="tab" tabIndex={-1}>Browse Emojis</a>
@@ -34,31 +34,31 @@ export function CardExport(props: GuildData) {
                         <a className="nav-link" data-bs-toggle="tab" href="#sticker-browse" aria-selected="false" role="tab" tabIndex={-1}>Browse Stickers</a>
                     </li>
                 </ul>
-                <div className="text-muted ms-auto">{`${emojis.length} emojis - ${stickers.length} stickers`}</div>
+                <div class="text-muted ms-auto">{`${emojis.length} emojis - ${stickers.length} stickers`}</div>
             </div>
-            <div className="card-body">
-                <div className="tab-content">
-                    <div id="export" className="tab-pane fade show active" role="tabpanel">
-                        <div className="d-flex">
-                            <div className="btn-group me-1">
+            <div class="card-body">
+                <div class="tab-content">
+                    <div id="export" class="tab-pane fade show active" role="tabpanel">
+                        <div class="d-flex">
+                            <div class="btn-group me-1">
                                 <ButtonLabel text="Emojis" />
                                 <Button text="Download ZIP" onClick={exportEmojisZIP} disabled={!buttons.emojiZIP} />
                                 <Button text="Download JSON" onClick={exportEmojisJSON} disabled={!buttons.emojiJSON} />
                             </div>
-                            <div className="btn-group">
+                            <div class="btn-group">
                                 <ButtonLabel text="Stickers" />
                                 <Button text="Download ZIP" onClick={exportStickersZIP} disabled={!buttons.stickerZIP} />
                             </div>
                         </div>
                         <AlertDownload />
                     </div>
-                    <div id="browse" className="tab-pane fade" role="tabpanel">
-                        <div className="d-flex flex-wrap justify-content-center">
+                    <div id="browse" class="tab-pane fade" role="tabpanel">
+                        <div class="d-flex flex-wrap justify-content-center">
                             {emojis}
                         </div>
                     </div>
-                    <div id="sticker-browse" className="tab-pane fade" role="tabpanel">
-                        <div className="d-flex flex-wrap justify-content-center">
+                    <div id="sticker-browse" class="tab-pane fade" role="tabpanel">
+                        <div class="d-flex flex-wrap justify-content-center">
                             {stickers}
                         </div>
                     </div>

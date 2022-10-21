@@ -1,6 +1,6 @@
 import { RESTAPIPartialCurrentUserGuild } from "discord-api-types/v10";
 import _ from "lodash";
-import React, { ChangeEvent, useState } from "react";
+import { useState } from "preact/hooks";
 import { Guild } from "../../models";
 
 export function GuildSelect(props: Props) {
@@ -10,15 +10,16 @@ export function GuildSelect(props: Props) {
     const options = guilds.map(g => (<option key={g.id} value={g.id}> {g.name}</option>));
     options.unshift(<option key="" value="">Choose server...</option>);
     return (
-        <div className="input-group">
-            <label className="input-group-text font-monospace" htmlFor="inputGuild">Server</label>
-            <select className="form-select" disabled={guilds.length == 0} onChange={onChange}>
+        <div class="input-group">
+            <label class="input-group-text font-monospace" htmlFor="inputGuild">Server</label>
+            <select class="form-select" disabled={guilds.length == 0} onInput={onChange}>
                 {options}
             </select>
-            <button className="btn btn-primary" type="button" disabled={guild.id == ""} onClick={() => props.onSelect(guild)}>Select</button>
+            <button class="btn btn-primary" type="button" disabled={guild.id == ""} onClick={() => props.onSelect(guild)}>Select</button>
         </div>
     );
-    function onChange(e: ChangeEvent<HTMLSelectElement>) {
+    function onChange(e: Event) {
+        if (!(e.target instanceof HTMLSelectElement)) { return; }
         const index = e.target.selectedIndex;
         const s = e.target.options[index];
         setID({

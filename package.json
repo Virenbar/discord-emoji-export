@@ -1,7 +1,7 @@
 {
   "name": "discord-emoji-export",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.1.0",
+  "description": "Site for exporting emojis and stickers from discord server as ZIP archive",
   "author": "Virenbar",
   "license": "MIT",
   "repository": {
@@ -20,18 +20,16 @@
     "jquery": "^3.6.1",
     "jszip": "^3.10.1",
     "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "preact": "^10.11.2"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "2.7.0",
+    "@tsconfig/create-react-app": "^1.0.2",
     "@types/bootstrap": "^5.2.5",
     "@types/file-saver": "^2.0.5",
     "@types/jquery": "^3.5.14",
     "@types/lodash": "^4.14.186",
     "@types/node": "^18.11.2",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "buffer": "^6.0.3",
@@ -41,6 +39,9 @@
     "parcel": "^2.7.0",
     "process": "^0.11.10",
     "typescript": "^4.8.4"
+  },
+  "alias": {
+    "preact/jsx-dev-runtime": "preact/jsx-runtime"
   },
   "type": "module",
   "private": true

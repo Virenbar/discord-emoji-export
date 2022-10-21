@@ -20,7 +20,19 @@ async function saveZIP(guild: Guild, images: Image[]) {
     saveAs(A, `${name}.zip`);
 }
 
-//#region Emoji
+function fixNames(images: Image[]) {
+    const names: { [index: string]: number } = {};
+    images.forEach(i => {
+        const name = i.name;
+        const count = names[name] || 0;
+        names[name] = count + 1;
+        if (count > 0) {
+            i.name = i.name.replace(/\.\w+$/, `~${count}$&`);
+        }
+    });
+}
+
+// Emojis
 function saveEmojiJSON(guild: Guild, emojis: APIEmoji[]) {
     const emojisJSON = emojis.map(e => {
         return {
@@ -40,13 +52,11 @@ function saveEmojiJSON(guild: Guild, emojis: APIEmoji[]) {
     const blob = new Blob([json], { type: "text/plain;charset=utf-8" });
     saveAs(blob, `${name}.json`);
 }
-
 async function saveEmojiZIP(guild: Guild, emojis: APIEmoji[]) {
     const requests = emojis.map(e => fetchEmoji(e));
     const images = await Promise.all(requests);
     saveZIP(guild, images);
 }
-
 async function saveEmoji(emoji: APIEmoji) {
     const { name, image } = await fetchEmoji(emoji);
     saveAs(image, name);
@@ -57,12 +67,11 @@ async function fetchEmoji(emoji: APIEmoji) {
     return { name, image };
 }
 
-//#endregion
-
-//#region Sticker
+// Stickers
 async function saveStickerZIP(guild: Guild, stickers: APISticker[]) {
     const requests = stickers.map(e => fetchSticker(e));
     const images = await Promise.all(requests);
+    fixNames(images);
     saveZIP(guild, images);
 }
 async function saveSticker(sticker: APISticker) {
@@ -80,8 +89,6 @@ async function fetchSticker(sticker: APISticker) {
     const image = await fetch(url).then(r => r.blob());
     return { name, image };
 }
-
-//#endregion
 
 const Export = {
     saveEmoji,

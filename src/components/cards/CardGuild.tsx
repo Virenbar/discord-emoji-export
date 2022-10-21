@@ -1,5 +1,5 @@
 import { APIUser, RESTAPIPartialCurrentUserGuild } from "discord-api-types/v10";
-import React, { useState } from "react";
+import { useState } from "preact/hooks";
 import { HandleError } from "../../helpers";
 import Toast from "../../helpers/toast";
 import { Guild } from "../../models";
@@ -14,23 +14,23 @@ export function CardGuild(props: Props) {
     if (!state.user) { loadToken(); }
 
     return (
-        <div className="card text-white border-primary mb-3">
-            <div className="card-header d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center">
-                    <h4 className="m-0">Discord Emoji Export</h4>
-                    <button type="button" className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#tokenModal">How to get Token</button>
+        <div class="card text-white border-primary mb-3">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <h4 class="m-0">Discord Emoji Export</h4>
+                    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#tokenModal">How to get Token</button>
                 </div>
                 <div>
                     <ClearButton user={state.user} onClick={clearToken} />
                 </div>
             </div>
-            <div className="card-body">
+            <div class="card-body">
                 <TokenInput onClick={setToken} />
                 <GuildSelect guilds={state.guilds} onSelect={props.onSelect} />
                 <AlertToken />
             </div>
-            <div className="card-footer text-muted">
-                <div className="float-end">
+            <div class="card-footer text-muted">
+                <div class="float-end">
                     {state.guilds.length} servers
                 </div>
             </div>
