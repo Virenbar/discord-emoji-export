@@ -1,5 +1,5 @@
 import { Toast as BToast } from "bootstrap";
-import { querySelector } from "./document";
+import { querySelector } from ".";
 
 const Container = getOrCreateContainer();
 

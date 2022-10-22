@@ -24,6 +24,9 @@ footer {
         padding: 0.5rem;
 
         div:nth-child(1) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 40px;
             margin: 0 0 5px 0;
 
@@ -48,11 +51,15 @@ footer {
         padding: 0.5rem;
 
         div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 128px;
             margin: 0 0 5px 0;
 
             img {
                 max-height: 128px;
+                max-width: 100%;
             }
         }
     }

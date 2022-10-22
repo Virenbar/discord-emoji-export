@@ -4,7 +4,7 @@ import { render } from "preact";
 import { useState } from "preact/hooks";
 import { CardExport } from "./components/cards/CardExport";
 import { CardGuild } from "./components/cards/CardGuild";
-import { getElementById } from "./helpers/document";
+import { getElementById } from "./helpers";
 import { Guild, GuildData } from "./models";
 import Discord from "./services/discord";
 
