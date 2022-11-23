@@ -1,6 +1,6 @@
 # discord-emoji-export
 
-Site for exporting emojis and stickers from any discord server you are in.
+Website for exporting emojis and stickers from any discord server you are in.
 
 ## Features
 
@@ -45,7 +45,7 @@ Site for exporting emojis and stickers from any discord server you are in.
 3. Build and start server
 
     ```bash
-    yarn run start
+    yarn start
     ```
 
 4. Open: <http://localhost:8080>
@@ -70,4 +70,4 @@ Site for exporting emojis and stickers from any discord server you are in.
 
 ## CORS proxy
 
-Site uses [CORS proxy](https://github.com/Virenbar/cloudflare-cors-proxy) for stickers
+Website uses [CORS proxy](https://github.com/Virenbar/cloudflare-cors-proxy) for stickers

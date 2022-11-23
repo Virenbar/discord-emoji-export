@@ -17,7 +17,7 @@ export function CardGuild(props: Props) {
         <div class="card text-white border-primary mb-3">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
-                    <h4 class="m-0">Discord Emoji Export</h4>
+                    <h4 class="mx-0 my-2">Discord Emoji Export</h4>
                     <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#tokenModal">How to get Token</button>
                 </div>
                 <div>
@@ -25,6 +25,14 @@ export function CardGuild(props: Props) {
                 </div>
             </div>
             <div class="card-body">
+                <p>
+                    Website for exporting emojis and stickers from discord servers.
+                    <ul>
+                        <li>Set discord token</li>
+                        <li>Select server from list</li>
+                        <li>Download emojis and stickers</li>
+                    </ul>
+                </p>
                 <TokenInput onClick={setToken} />
                 <GuildSelect guilds={state.guilds} onSelect={props.onSelect} />
                 <AlertToken />
@@ -46,8 +54,9 @@ export function CardGuild(props: Props) {
     async function setToken(token: string) {
         const Match = /(\w+\.\w+\.\w+)/.exec(token);
         if (Match?.length) {
-            await initDiscord(Match[0]);
-            Toast.showInfo("Token validated");
+            if (await initDiscord(Match[0])) {
+                Toast.showInfo("Token validated");
+            }
         } else {
             Toast.showWarning("Invalid token format", "Invalid token");
         }
@@ -57,8 +66,9 @@ export function CardGuild(props: Props) {
         const token = localStorage.getItem("token");
         if (!token) { return; }
 
-        await initDiscord(token);
-        Toast.showInfo("Token loaded from local storage");
+        if (await initDiscord(token)) {
+            Toast.showInfo("Token loaded from local storage");
+        }
     }
 
     async function initDiscord(token: string) {
@@ -68,8 +78,10 @@ export function CardGuild(props: Props) {
             const guilds = await Discord.getGuilds();
             localStorage.setItem("token", token);
             setState({ user, guilds });
+            return true;
         } catch (error) {
             HandleError(error);
+            return false;
         }
     }
 
