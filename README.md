@@ -1,6 +1,7 @@
-# discord-emoji-export
+# discord-emoji-export [![Build artifact](https://img.shields.io/github/actions/workflow/status/Virenbar/discord-emoji-export/publish.yml?label=Build&logo=github)](https://github.com/Virenbar/discord-emoji-export/actions/workflows/publish.yml)
 
 Website for exporting emojis and stickers from any discord server you are in.
+![page](./assets/page.png)
 
 ## Features
 
