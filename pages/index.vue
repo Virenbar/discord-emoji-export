@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { Guild, GuildData } from "~/types";
-const state = useState<GuildData>(() => ({ emojis: [], stickers: [] }));
+import { Guild } from "~/types";
 
 const onSelect = async (guild: Guild) => {
   const Discord = useDiscord();
@@ -13,8 +12,11 @@ const onSelect = async (guild: Guild) => {
 const onClear = () => {
   state.value = { emojis: [], stickers: [] };
 };
+watchEffect(() => {
+  const state = useDiscord().state.value;
+  console.log(`State: ${state.guild?.name}(${state.guild?.id}) - ${state.emojis.length} - ${state.stickers.length}`);
+});
 
-//console.log(`State: ${state.guild?.name}(${state.guild?.id}) - ${state.emojis.length} - ${state.stickers.length}`);
 </script>
 <template>
   <div className="container overflow-hidden">

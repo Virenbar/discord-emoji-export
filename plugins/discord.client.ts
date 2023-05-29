@@ -14,9 +14,11 @@ import {
   RouteBases,
   Routes
 } from "discord-api-types/v10";
+import { GuildData } from "~/types";
 
 export default defineNuxtPlugin(() => {
-  const token = ref("");
+  const token = useState<string>("token");
+  const state = useState<GuildData>(() => ({ emojis: [], stickers: [] }));
 
   async function fetchAPI<T>(path: string) {
     const url = `${RouteBases.api}${path}`;
@@ -44,6 +46,7 @@ export default defineNuxtPlugin(() => {
   function useDiscord() {
     return {
       token,
+      state,
       getMe: () => fetchAPI<RESTGetAPICurrentUserResult>(Routes.user("@me")),
       getGuilds: () => fetchAPI<RESTGetAPICurrentUserGuildsResult>(Routes.userGuilds()),
       getGuildEmojis: (guildID: string) => fetchAPI<RESTGetAPIGuildEmojisResult>(Routes.guildEmojis(guildID)),
