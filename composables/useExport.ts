@@ -1,8 +1,7 @@
 import { APIEmoji, APISticker } from "discord-api-types/v10";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
-import { Guild } from "../models";
-import Discord from "./discord";
+import { Guild } from "../types";
 
 // Public CORS proxy
 const CORS_public = "https://api.allorigins.win/raw?url=";
@@ -34,6 +33,7 @@ function fixNames(images: Image[]) {
 
 // Emojis
 function saveEmojiJSON(guild: Guild, emojis: APIEmoji[]) {
+    const Discord = useDiscord();
     const emojisJSON = emojis.map(e => {
         return {
             name: e.name,
@@ -52,16 +52,20 @@ function saveEmojiJSON(guild: Guild, emojis: APIEmoji[]) {
     const blob = new Blob([json], { type: "text/plain;charset=utf-8" });
     saveAs(blob, `${name}.json`);
 }
+
 async function saveEmojiZIP(guild: Guild, emojis: APIEmoji[]) {
     const requests = emojis.map(e => fetchEmoji(e));
     const images = await Promise.all(requests);
     saveZIP(guild, images);
 }
+
 async function saveEmoji(emoji: APIEmoji) {
     const { name, image } = await fetchEmoji(emoji);
     saveAs(image, name);
 }
+
 async function fetchEmoji(emoji: APIEmoji) {
+    const Discord = useDiscord();
     const name = Discord.emojiName(emoji);
     const image = await fetch(Discord.emojiURL(emoji)).then(r => r.blob());
     return { name, image };
@@ -74,11 +78,14 @@ async function saveStickerZIP(guild: Guild, stickers: APISticker[]) {
     fixNames(images);
     saveZIP(guild, images);
 }
+
 async function saveSticker(sticker: APISticker) {
     const { name, image } = await fetchSticker(sticker);
     saveAs(image, name);
 }
+
 async function fetchSticker(sticker: APISticker) {
+    const Discord = useDiscord();
     const name = Discord.stickerName(sticker);
 
     // stickers endpoint has no "Access-Control-Allow-Origin" header
@@ -90,15 +97,15 @@ async function fetchSticker(sticker: APISticker) {
     return { name, image };
 }
 
-const Export = {
-    saveEmoji,
-    saveEmojiZIP,
-    saveEmojiJSON,
-    saveSticker,
-    saveStickerZIP
-};
-
-export default Export;
+export default function () {
+    return {
+        saveEmoji,
+        saveEmojiZIP,
+        saveEmojiJSON,
+        saveSticker,
+        saveStickerZIP
+    };
+}
 
 interface Image {
     name: string

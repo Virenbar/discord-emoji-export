@@ -1,5 +1,4 @@
 import { Toast as BToast } from "bootstrap";
-import { querySelector } from ".";
 
 const Container = getOrCreateContainer();
 
@@ -13,7 +12,7 @@ function showToast(title: string, description: string, type: ToastType = "info")
 }
 
 function getOrCreateContainer() {
-    let container = querySelector<HTMLDivElement>("body .toast-container");
+    let container = document.querySelector<HTMLDivElement>("body .toast-container");
 
     if (!container) {
         container = document.createElement("div");

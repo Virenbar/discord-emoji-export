@@ -1,47 +1,34 @@
 {
   "name": "discord-emoji-export",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Website for exporting emojis and stickers from discord server as ZIP archive",
   "author": "Virenbar",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Virenbar/discord-emoji-export.git"
-  },
-  "source": "src/index.html",
+  "repository": "Virenbar/discord-emoji-export",
   "scripts": {
-    "start": "parcel -p 8080",
-    "build": "parcel build --public-url ./"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "file-saver": "^2.0.5",
-    "jquery": "^3.6.3",
     "jszip": "^3.10.1",
-    "lodash": "^4.17.21",
-    "preact": "^10.11.3"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "2.8.0",
-    "@tsconfig/create-react-app": "^1.0.3",
+    "@nuxt/eslint-config": "^0.1.1",
     "@types/bootstrap": "^5.2.6",
     "@types/file-saver": "^2.0.5",
-    "@types/jquery": "^3.5.14",
-    "@types/lodash": "^4.14.191",
-    "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.48.0",
-    "@typescript-eslint/parser": "^5.48.0",
-    "buffer": "^5.5.0",
-    "discord-api-types": "^0.37.0",
-    "eslint": "^8.28.0",
-    "eslint-plugin-import": "^2.26.0",
-    "parcel": "2.8.0",
-    "process": "^0.11.10",
-    "typescript": "^4.9.4"
-  },
-  "alias": {
-    "preact/jsx-dev-runtime": "preact/jsx-runtime"
+    "discord-api-types": "^0.37.42",
+    "eslint": "^8.39.0",
+    "nuxt": "^3.4.0",
+    "sass": "^1.62.0",
+    "sass-loader": "^13.2.0",
+    "typescript": "^5.0.4",
+    "webpack": "^5.82.0"
   },
   "type": "module",
   "private": true
