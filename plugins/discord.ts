@@ -7,18 +7,15 @@ import {
   ImageFormat,
   RESTAPIPartialCurrentUserGuild,
   RESTError,
-  RESTGetAPICurrentUserGuildsResult,
-  RESTGetAPICurrentUserResult,
-  RESTGetAPIGuildEmojisResult,
-  RESTGetAPIGuildStickersResult,
   RouteBases,
   Routes
 } from "discord-api-types/v10";
-import { GuildData } from "~/types";
+import { Emojis, GuildData, Guilds, Stickers, User, UserData } from "~/types";
 
 export default defineNuxtPlugin(() => {
-  const token = useState<string>("token");
-  const state = useState<GuildData>(() => ({ emojis: [], stickers: [] }));
+  const token = useState<string>("token", () => "");
+  const userData = useState<UserData>(() => ({ guilds: [] }));
+  const guildData = useState<GuildData>(() => ({ id: "", name: "", emojis: [], stickers: [] }));
 
   async function fetchAPI<T>(path: string) {
     const url = `${RouteBases.api}${path}`;
@@ -46,11 +43,12 @@ export default defineNuxtPlugin(() => {
   function useDiscord() {
     return {
       token,
-      state,
-      getMe: () => fetchAPI<RESTGetAPICurrentUserResult>(Routes.user("@me")),
-      getGuilds: () => fetchAPI<RESTGetAPICurrentUserGuildsResult>(Routes.userGuilds()),
-      getGuildEmojis: (guildID: string) => fetchAPI<RESTGetAPIGuildEmojisResult>(Routes.guildEmojis(guildID)),
-      getGuildStickers: (guildID: string) => fetchAPI<RESTGetAPIGuildStickersResult>(Routes.guildStickers(guildID)),
+      userData,
+      guildData,
+      getMe: () => fetchAPI<User>(Routes.user("@me")),
+      getGuilds: () => fetchAPI<Guilds>(Routes.userGuilds()),
+      getGuildEmojis: (guildID: string) => fetchAPI<Emojis>(Routes.guildEmojis(guildID)),
+      getGuildStickers: (guildID: string) => fetchAPI<Stickers>(Routes.guildStickers(guildID)),
       emojiID: (emoji: APIEmoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
       emojiURL: (emoji: APIEmoji) => `${RouteBases.cdn}${CDNRoutes.emoji(emoji.id ?? "", emoji.animated ? ImageFormat.GIF : ImageFormat.PNG)}`,
       emojiName: (emoji: APIEmoji) => `${emoji.name}.${emoji.animated ? "gif" : "png"}`,

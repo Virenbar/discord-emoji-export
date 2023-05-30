@@ -1,28 +1,32 @@
 import { Toast as BToast } from "bootstrap";
 
-const Container = getOrCreateContainer();
+type ToastType = "primary" | "secondary" | "success" | "info" | "warning" | "danger"
 
-function showToast(title: string, description: string, type: ToastType = "info") {
+export default defineNuxtPlugin(() => {
+  const Container = getOrCreateContainer();
+
+  function showToast(title: string, description: string, type: ToastType = "info") {
     const toast = createToast(title, description, type);
     Container.appendChild(toast);
 
     toast.addEventListener("hidden.bs.toast", () => toast.remove());
     const T = new BToast(toast);
     T.show();
-}
+  }
 
-function getOrCreateContainer() {
+  function getOrCreateContainer() {
     let container = document.querySelector<HTMLDivElement>("body .toast-container");
 
     if (!container) {
-        container = document.createElement("div");
-        container.setAttribute("class", "toast-container position-fixed p-3");
-        document.body.append(container);
+      container = document.createElement("div");
+      container.setAttribute("class", "toast-container position-fixed p-3");
+      document.body.append(container);
     }
 
     return container;
-}
-export function createToast(title: string, description: string, type: ToastType = "info") {
+  }
+
+  function createToast(title: string, description: string, type: ToastType = "info") {
     const toast = document.createElement("div");
     toast.setAttribute("class", `toast text-bg-${type}`);
     toast.setAttribute("role", "alert");
@@ -55,23 +59,32 @@ export function createToast(title: string, description: string, type: ToastType 
     toast.append(body);
 
     return toast;
-}
+  }
 
-const Toast = {
-    showSuccess: (description: string, title = "Success") => showToast(title, description, "success"),
-    showInfo: (description: string, title = "Info") => showToast(title, description, "info"),
-    showWarning: (description: string, title = "Warning") => showToast(title, description, "warning"),
-    showError: (description: string, title = "Error") => showToast(title, description, "danger")
-};
-export default Toast;
+  const showSuccess = (description: string, title = "Success") => showToast(title, description, "success");
+  const showInfo = (description: string, title = "Info") => showToast(title, description, "info");
+  const showWarning = (description: string, title = "Warning") => showToast(title, description, "warning");
+  const showError = (description: string, title = "Error") => showToast(title, description, "danger");
 
-type ToastType = keyof typeof ToastTypes
+  function handleError(error: unknown) {
+    console.error(error);
+    if (error instanceof Error) { showError(error.message, error.name); }
+    else { showError(`${error}`); }
+  }
 
-enum ToastTypes {
-    "primary",
-    "secondary",
-    "success",
-    "info",
-    "warning",
-    "danger"
-}
+  function useToast() {
+    return {
+      showSuccess,
+      showInfo,
+      showWarning,
+      showError,
+      handleError
+    };
+  }
+
+  return {
+    provide: {
+      useToast
+    }
+  };
+});
