@@ -4,30 +4,28 @@ const props = defineProps<Props>();
 interface Props { emoji: APIEmoji }
 
 const { emojiID, emojiURL } = useDiscord();
-const Export = useExport();
+const { saveEmoji } = useExport();
 const Toast = useToast();
 
-const id = `<${emojiID(props.emoji)}>`;
 const url = emojiURL(props.emoji);
 
 const copyID = () => {
+  const id = `<${emojiID(props.emoji)}>`;
   navigator.clipboard.writeText(id);
   Toast.showSuccess(`ID: ${id}`, "Emoji ID copied");
 };
 
-const download = () => {
-  Export.saveEmoji(props.emoji);
-};
+const download = () => { saveEmoji(props.emoji); };
 </script>
 <template>
-  <div class="emoji card m-1 border-primary">
+  <div class="card m-1 border-primary">
     <div class="card-header text-center">
       <span>{{ props.emoji.name }}</span>
     </div>
     <div class="card-body d-flex flex-column text-center">
-      <div class="">
+      <div class="wrapper">
         <a target="_blank" rel="noopener noreferrer" :href="url">
-          <img :src="`${url}?size=40`" :alt="emoji.name ?? ''">
+          <img :src="`${url}?size=48`" :alt="props.emoji.name ?? ''">
         </a>
       </div>
       <div class="btn-group">
@@ -42,11 +40,8 @@ const download = () => {
   </div>
 </template>
 <style scoped lang="scss">
-.emoji {
-  flex: 1 0 0;
-  min-width: 200px;
-  max-width: 250px;
-  transition: all 0.3s;
+.card {
+  width: 200px;
 
   .card-header {
     height: 100%;
@@ -55,18 +50,15 @@ const download = () => {
   .card-body {
     padding: 0.5rem;
 
-    div:nth-child(1) {
-      display: flex;
+    .wrapper {
       justify-content: center;
-      align-items: center;
-      height: 40px;
-      margin: 0 0 5px 0;
-
+      height: 48px;
+      margin-bottom: 5px;
     }
   }
 }
 
 img {
-  max-height: 40px;
+  max-height: 48px;
 }
 </style>

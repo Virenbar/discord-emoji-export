@@ -1,10 +1,11 @@
 <script setup lang="ts">
-const { token, userData, userAvatar } = useDiscord();
+const { token, userData, guildData, userAvatar } = useDiscord();
 
 const onClick = () => {
   localStorage.clear();
   token.value = "";
   userData.value = { guilds: [] };
+  guildData.value = { id: "", name: "", emojis: [], stickers: [] };
 };
 </script>
 <template>

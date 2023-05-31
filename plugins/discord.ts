@@ -8,7 +8,8 @@ import {
   RESTAPIPartialCurrentUserGuild,
   RESTError,
   RouteBases,
-  Routes
+  Routes,
+  StickerFormatType
 } from "discord-api-types/v10";
 import { Emojis, GuildData, Guilds, Stickers, User, UserData } from "~/types";
 
@@ -40,6 +41,21 @@ export default defineNuxtPlugin(() => {
       : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(0)}?size=32`;
   }
 
+  function emojiFormat(emoji: APIEmoji) { return emoji.animated ? ImageFormat.GIF : ImageFormat.PNG; }
+
+  function stickerFormat(sticker: APISticker) {
+    switch (sticker.format_type) {
+      case StickerFormatType.Lottie:
+        return ImageFormat.Lottie;
+      case StickerFormatType.GIF:
+        return ImageFormat.GIF;
+      case StickerFormatType.PNG:
+      case StickerFormatType.APNG:
+      default:
+        return ImageFormat.PNG;
+    }
+  }
+
   function useDiscord() {
     return {
       token,
@@ -50,10 +66,10 @@ export default defineNuxtPlugin(() => {
       getGuildEmojis: (guildID: string) => fetchAPI<Emojis>(Routes.guildEmojis(guildID)),
       getGuildStickers: (guildID: string) => fetchAPI<Stickers>(Routes.guildStickers(guildID)),
       emojiID: (emoji: APIEmoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
-      emojiURL: (emoji: APIEmoji) => `${RouteBases.cdn}${CDNRoutes.emoji(emoji.id ?? "", emoji.animated ? ImageFormat.GIF : ImageFormat.PNG)}`,
-      emojiName: (emoji: APIEmoji) => `${emoji.name}.${emoji.animated ? "gif" : "png"}`,
-      stickerURL: (sticker: APISticker) => `${RouteBases.cdn}${CDNRoutes.sticker(sticker.id, ImageFormat.PNG)}`,
-      stickerName: (sticker: APISticker) => `${sticker.name}.png`,
+      emojiURL: (emoji: APIEmoji) => `${RouteBases.cdn}${CDNRoutes.emoji(emoji.id ?? "", emojiFormat(emoji))}`,
+      emojiName: (emoji: APIEmoji) => `${emoji.name}.${emojiFormat(emoji)}`,
+      stickerURL: (sticker: APISticker) => `${RouteBases.cdn}${CDNRoutes.sticker(sticker.id, stickerFormat(sticker))}`,
+      stickerName: (sticker: APISticker) => `${sticker.name}.${stickerFormat(sticker)}`,
       guildIcon,
       userAvatar
     };

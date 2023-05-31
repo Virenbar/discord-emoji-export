@@ -4,5 +4,10 @@ export default defineNuxtConfig({
   ],
   app: {
     baseURL: "/discord-emoji-export/"
+  },
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => ["lottie-player"].includes(tag)
+    }
   }
 });

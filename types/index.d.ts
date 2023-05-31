@@ -8,7 +8,9 @@ import {
 
 export type User = RESTGetAPICurrentUserResult
 export type Guilds = RESTGetAPICurrentUserGuildsResult
+export type Emoji = APIEmoji
 export type Emojis = RESTGetAPIGuildEmojisResult
+export type Sticker = APISticker
 export type Stickers = RESTGetAPIGuildStickersResult
 
 export interface UserData {

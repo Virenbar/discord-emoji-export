@@ -11,8 +11,7 @@ const onClick = async () => {
   const id = guild.id;
   const name = guild.name;
   const emojis = _.sortBy(await getGuildEmojis(guildID.value), e => e.name?.toLowerCase());
-  const stickers = _.sortBy(await getGuildStickers(guildID.value), s => s.name.toLowerCase())
-    .filter(s => s.format_type != 3);// Lottie not supported
+  const stickers = _.sortBy(await getGuildStickers(guildID.value), s => s.name.toLowerCase());
 
   guildData.value = { id, name, emojis, stickers };
 };
@@ -32,7 +31,7 @@ watchEffect(() => {
         {{ guild.name }}
       </option>
     </select>
-    <button class="btn btn-primary" type="button" :disabled="guildID == ''" :onClick="onClick">
+    <button class="btn btn-primary" type="button" :disabled="guilds.length == 0 || guildID == ''" :onClick="onClick">
       Select
     </button>
   </div>

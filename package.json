@@ -13,6 +13,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@lottiefiles/lottie-player": "^1.7.1",
     "bootstrap": "^5.2.3",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",

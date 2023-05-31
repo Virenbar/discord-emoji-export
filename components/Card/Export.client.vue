@@ -1,13 +1,19 @@
 <script setup lang="ts">
-const Export = useExport();
-const Toast = useToast();
-const { guildData } = useDiscord();
 const buttons = useState<State>();
 interface State {
   emojiZIP: boolean
   emojiJSON: boolean
   stickerZIP: boolean
 }
+
+const {
+  saveEmojiZIP,
+  saveEmojiJSON,
+  saveStickerZIP
+} = useExport();
+const Toast = useToast();
+const { guildData } = useDiscord();
+
 watchEffect(() => {
   const hasEmojis = guildData.value.emojis.length > 0;
   const hasStickers = guildData.value.stickers.length > 0;
@@ -16,37 +22,37 @@ watchEffect(() => {
 
 function exportEmojisJSON() {
   console.log("Generating JSON");
-  buttons.value = { ...buttons.value, emojiJSON: false };
-  Export.saveEmojiJSON(guildData.value);
+  buttons.value.emojiJSON = false;
+  saveEmojiJSON(guildData.value);
   Toast.showSuccess("JSON generated");
-  buttons.value = { ...buttons.value, emojiJSON: true };
+  buttons.value.emojiJSON = true;
 }
 
 async function exportEmojisZIP() {
   console.log("Generating ZIP");
   try {
-    buttons.value = { ...buttons.value, emojiZIP: false };
+    buttons.value.emojiZIP = false;
     Toast.showInfo("Creating ZIP archive");
-    await Export.saveEmojiZIP(guildData.value);
+    await saveEmojiZIP(guildData.value);
     Toast.showSuccess("ZIP archive created");
   } catch (error) {
     Toast.handleError(error);
   } finally {
-    buttons.value = { ...buttons.value, emojiZIP: true };
+    buttons.value.emojiZIP = true;
   }
 }
 
 async function exportStickersZIP() {
   console.log("Generating ZIP");
   try {
-    buttons.value = { ...buttons.value, stickerZIP: false };
+    buttons.value.stickerZIP = false;
     Toast.showInfo("Creating ZIP archive");
-    await Export.saveStickerZIP(guildData.value);
+    await saveStickerZIP(guildData.value);
     Toast.showSuccess("ZIP archive created");
   } catch (error) {
     Toast.handleError(error);
   } finally {
-    buttons.value = { ...buttons.value, stickerZIP: true };
+    buttons.value.stickerZIP = true;
   }
 }
 </script>

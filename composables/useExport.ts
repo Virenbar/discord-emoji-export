@@ -3,36 +3,27 @@ import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { GuildData } from "../types";
 
-// Public CORS proxy
-const CORS_public = "https://api.allorigins.win/raw?url=";
-
-// Private CORS proxy
-// Only works for whitelisted domains
-const CORS_private = "https://cors.virenbar.workers.dev/?url=";
-
 async function fetchEmoji(emoji: APIEmoji) {
   const Discord = useDiscord();
   const name = Discord.emojiName(emoji);
-  const image = await fetch(Discord.emojiURL(emoji)).then(r => r.blob());
-  return { name, image };
+  const url = Discord.emojiURL(emoji);
+  const blob = await fetch(url).then(r => r.blob());
+  return { name, blob };
 }
 
 async function fetchSticker(sticker: APISticker) {
   const Discord = useDiscord();
   const name = Discord.stickerName(sticker);
-
   // stickers endpoint has no "Access-Control-Allow-Origin" header
-  // const image = await fetch(Discord.stickerURL(sticker)).then(r => r.blob());
-  const url = (!process.dev)
-    ? `${CORS_private}${Discord.stickerURL(sticker)}`
-    : `${CORS_public}${Discord.stickerURL(sticker)}`;
-  const image = await fetch(url).then(r => r.blob());
-  return { name, image };
+  // const url = Discord.stickerURL(sticker);
+  const url = useCORS(Discord.stickerURL(sticker));
+  const blob = await fetch(url).then(r => r.blob());
+  return { name, blob };
 }
 
-function fixNames(images: Image[]) {
+function fixNames(files: File[]) {
   const names: { [index: string]: number } = {};
-  images.forEach(i => {
+  files.forEach(i => {
     const name = i.name;
     const count = names[name] || 0;
     names[name] = count + 1;
@@ -42,19 +33,19 @@ function fixNames(images: Image[]) {
   });
 }
 
-async function saveZIP(guild: GuildData, images: Image[]) {
+async function saveZIP(guild: GuildData, files: File[]) {
   const name = guild.name.replace(/(\W+)/gi, "-");
 
   const ZIP = new JSZip();
-  images.forEach(i => ZIP.file(i.name, i.image));
+  files.forEach(i => ZIP.file(i.name, i.blob));
   const A = await ZIP.generateAsync({ type: "blob" });
   saveAs(A, `${name}.zip`);
 }
 
 // Emojis
 async function saveEmoji(emoji: APIEmoji) {
-  const { name, image } = await fetchEmoji(emoji);
-  saveAs(image, name);
+  const { name, blob } = await fetchEmoji(emoji);
+  saveAs(blob, name);
 }
 
 async function saveEmojiZIP(guild: GuildData) {
@@ -86,8 +77,8 @@ function saveEmojiJSON(guild: GuildData) {
 
 // Stickers
 async function saveSticker(sticker: APISticker) {
-  const { name, image } = await fetchSticker(sticker);
-  saveAs(image, name);
+  const { name, blob } = await fetchSticker(sticker);
+  saveAs(blob, name);
 }
 
 async function saveStickerZIP(guild: GuildData) {
@@ -107,7 +98,7 @@ export default function () {
   };
 }
 
-interface Image {
+interface File {
   name: string
-  image: Blob
+  blob: Blob
 }

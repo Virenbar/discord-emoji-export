@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { userData } = useDiscord();
-
 </script>
 <template>
   <div class="card text-white border-primary mb-3">
@@ -14,20 +13,18 @@ const { userData } = useDiscord();
         </button>
       </div>
       <div>
-        <ButtonClear />
+        <CardGuildClear />
       </div>
     </div>
     <div class="card-body">
-      <p>
-        Website for exporting emojis and stickers from discord servers.
-      </p>
+      Website for exporting emojis and stickers from discord servers.
       <ul>
         <li>Set discord token</li>
         <li>Select server from list</li>
         <li>Download emojis and stickers</li>
       </ul>
-      <TokenInput />
-      <GuildSelect />
+      <CardGuildInput />
+      <CardGuildSelect />
       <AlertToken />
     </div>
     <div class="card-footer text-muted">

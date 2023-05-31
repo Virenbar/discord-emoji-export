@@ -16,7 +16,7 @@
             <li>Go to <strong>Network</strong> tab</li>
             <li>Turn on XHR filter</li>
             <li>Select any request</li>
-            <li>Find authorization header</li>
+            <li>Find <span class="badge bg-secondary">authorization</span> header</li>
           </ul>
           <img src="/images/network.png">
           <h5> Using application tab (browser only)</h5>
