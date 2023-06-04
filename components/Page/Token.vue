@@ -10,7 +10,6 @@
         </div>
         <div class="modal-body">
           <h5> Using network tab</h5>
-          <p>
           <ul>
             <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
             <li>Switch channel or server in Discord</li>
@@ -20,9 +19,7 @@
             <li>Find authorization header</li>
           </ul>
           <img src="../static/images/network.png">
-          </p>
           <h5> Using application tab (browser only)</h5>
-          <p>
           <ul>
             <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
             <li>Go to <strong>Application</strong> tab</li>
@@ -30,7 +27,6 @@
             <li>Search for <span class="badge bg-secondary">token</span> key</li>
           </ul>
           <img src="../static/images/application.png">
-          </p>
         </div>
       </div>
     </div>

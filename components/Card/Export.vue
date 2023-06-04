@@ -92,12 +92,12 @@ async function exportStickersZIP() {
         </div>
         <div id="browse" class="tab-pane fade" role="tabpanel">
           <div class="d-flex flex-wrap justify-content-center">
-            <Emoji v-for="emoji in guildData.emojis" :key="emoji.id!" :emoji="emoji" />
+            <CardEmoji v-for="emoji in guildData.emojis" :key="emoji.id!" :emoji="emoji" />
           </div>
         </div>
         <div id="sticker-browse" class="tab-pane fade" role="tabpanel">
           <div class="d-flex flex-wrap justify-content-center">
-            <Sticker v-for="sticker in guildData.stickers" :key="sticker.id!" :sticker="sticker" />
+            <CardSticker v-for="sticker in guildData.stickers" :key="sticker.id!" :sticker="sticker" />
           </div>
         </div>
       </div>

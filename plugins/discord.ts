@@ -11,12 +11,10 @@ import {
   Routes,
   StickerFormatType
 } from "discord-api-types/v10";
-import { Emojis, GuildData, Guilds, Stickers, User, UserData } from "~/types";
+import { Emojis, Guilds, Stickers, User } from "~/types";
 
 export default defineNuxtPlugin(() => {
   const token = useState<string>("token", () => "");
-  const userData = useState<UserData>(() => ({ guilds: [] }));
-  const guildData = useState<GuildData>(() => ({ id: "", name: "", emojis: [], stickers: [] }));
 
   async function fetchAPI<T>(path: string) {
     const url = `${RouteBases.api}${path}`;
@@ -56,11 +54,9 @@ export default defineNuxtPlugin(() => {
     }
   }
 
-  function useDiscord() {
+  function discord() {
     return {
       token,
-      userData,
-      guildData,
       getMe: () => fetchAPI<User>(Routes.user("@me")),
       getGuilds: () => fetchAPI<Guilds>(Routes.userGuilds()),
       getGuildEmojis: (guildID: string) => fetchAPI<Emojis>(Routes.guildEmojis(guildID)),
@@ -77,7 +73,7 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      useDiscord
+      discord
     }
   };
 });

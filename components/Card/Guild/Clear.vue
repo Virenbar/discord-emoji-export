@@ -2,7 +2,7 @@
 const { token, userData, guildData, userAvatar } = useDiscord();
 
 const onClick = () => {
-  localStorage.clear();
+  //localStorage.clear();
   token.value = "";
   userData.value = { guilds: [] };
   guildData.value = { id: "", name: "", emojis: [], stickers: [] };

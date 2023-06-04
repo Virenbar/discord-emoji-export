@@ -1,18 +1,7 @@
 import { Toast as BToast } from "bootstrap";
 
-type ToastType = "primary" | "secondary" | "success" | "info" | "warning" | "danger"
-
 export default defineNuxtPlugin(() => {
   const Container = getOrCreateContainer();
-
-  function showToast(title: string, description: string, type: ToastType = "info") {
-    const toast = createToast(title, description, type);
-    Container.appendChild(toast);
-
-    toast.addEventListener("hidden.bs.toast", () => toast.remove());
-    const T = new BToast(toast);
-    T.show();
-  }
 
   function getOrCreateContainer() {
     let container = document.querySelector<HTMLDivElement>("body .toast-container");
@@ -61,6 +50,15 @@ export default defineNuxtPlugin(() => {
     return toast;
   }
 
+  function showToast(title: string, description: string, type: ToastType = "info") {
+    const toast = createToast(title, description, type);
+    Container.appendChild(toast);
+
+    toast.addEventListener("hidden.bs.toast", () => toast.remove());
+    const T = new BToast(toast);
+    T.show();
+  }
+
   const showSuccess = (description: string, title = "Success") => showToast(title, description, "success");
   const showInfo = (description: string, title = "Info") => showToast(title, description, "info");
   const showWarning = (description: string, title = "Warning") => showToast(title, description, "warning");
@@ -72,8 +70,9 @@ export default defineNuxtPlugin(() => {
     else { showError(`${error}`); }
   }
 
-  function useToast() {
+  function toast() {
     return {
+      showToast,
       showSuccess,
       showInfo,
       showWarning,
@@ -84,7 +83,7 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      useToast
+      toast
     }
   };
 });
