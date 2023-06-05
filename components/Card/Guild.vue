@@ -1,9 +1,16 @@
 <script setup lang="ts">
-const { userData } = useDiscord();
+const { token, userData, guildData, userAvatar } = useDiscord();
+
+function clearData() {
+  //localStorage.clear();
+  token.value = "";
+  userData.value = { guilds: [] };
+  guildData.value = { id: "", name: "", emojis: [], stickers: [] };
+}
 </script>
 <template>
   <div class="card text-white border-primary mb-3">
-    <div class="card-header d-flex align-items-center justify-content-between">
+    <div class="card-header d-flex justify-content-between">
       <div class="d-flex align-items-center">
         <h4 class="mx-0 my-2">
           Discord Emoji Export
@@ -12,8 +19,14 @@ const { userData } = useDiscord();
           How to get Token
         </button>
       </div>
-      <div>
-        <CardGuildClear />
+      <div v-if="userData.user" class="btn-group">
+        <button class="btn btn-secondary">
+          <img class="rounded-circle" :src="userAvatar(userData.user)">
+          <span class="align-middle">{{ ` ${userData.user.username}#${userData.user.discriminator}` }}</span>
+        </button>
+        <button class="btn btn-primary" :onClick="clearData">
+          Clear token
+        </button>
       </div>
     </div>
     <div class="card-body">
@@ -34,3 +47,8 @@ const { userData } = useDiscord();
     </div>
   </div>
 </template>
+<style scoped>
+.rounded-circle img {
+  height: 28;
+}
+</style>

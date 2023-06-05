@@ -1,5 +1,5 @@
 import { APIEmoji, APISticker } from "discord-api-types/v10";
-import { saveAs } from "file-saver";
+import FS from "file-saver";
 import JSZip from "jszip";
 import { GuildData } from "../types";
 
@@ -39,13 +39,13 @@ async function saveZIP(guild: GuildData, files: File[]) {
   const ZIP = new JSZip();
   files.forEach(i => ZIP.file(i.name, i.blob));
   const A = await ZIP.generateAsync({ type: "blob" });
-  saveAs(A, `${name}.zip`);
+  FS.saveAs(A, `${name}.zip`);
 }
 
 // Emojis
 async function saveEmoji(emoji: APIEmoji) {
   const { name, blob } = await fetchEmoji(emoji);
-  saveAs(blob, name);
+  FS.saveAs(blob, name);
 }
 
 async function saveEmojiZIP(guild: GuildData) {
@@ -72,13 +72,13 @@ function saveEmojiJSON(guild: GuildData) {
   const name = guild.name.replace(/(\W+)/gi, "-");
   const json = JSON.stringify(guildJSON, null, 4);
   const blob = new Blob([json], { type: "text/plain;charset=utf-8" });
-  saveAs(blob, `${name}.json`);
+  FS.saveAs(blob, `${name}.json`);
 }
 
 // Stickers
 async function saveSticker(sticker: APISticker) {
   const { name, blob } = await fetchSticker(sticker);
-  saveAs(blob, name);
+  FS.saveAs(blob, name);
 }
 
 async function saveStickerZIP(guild: GuildData) {
