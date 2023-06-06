@@ -10,8 +10,9 @@ async function download() {
   try {
     const { saveSticker } = useExport();
     await saveSticker(props.sticker);
-  } catch (e) {
-    Toast.handleError(e);
+  } catch (error) {
+    console.error(error);
+    Toast.showError(error);
   }
 }
 </script>

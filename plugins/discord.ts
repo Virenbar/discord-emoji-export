@@ -10,7 +10,7 @@ import {
 import { Emoji, Guild, Sticker, User } from "~/types";
 
 export default defineNuxtPlugin(() => {
-  const { token } = useStore();
+  const token = useState<string>("token", () => "");
 
   async function fetchAPI<T>(path: string) {
     const url = `${RouteBases.api}${path}`;
@@ -52,6 +52,7 @@ export default defineNuxtPlugin(() => {
 
   function discord() {
     return {
+      token,
       getMe: () => fetchAPI<User>(Routes.user("@me")),
       getGuilds: () => fetchAPI<Guild[]>(Routes.userGuilds()),
       getGuildEmojis: (guildID: string) => fetchAPI<Emoji[]>(Routes.guildEmojis(guildID)),

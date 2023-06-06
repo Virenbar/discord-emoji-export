@@ -1,10 +1,5 @@
 <script setup lang="ts">
 const { user, guilds, clear } = useStore();
-
-function clearData() {
-  localStorage.clear();
-  clear();
-}
 </script>
 <template>
   <div class="card text-white border-primary mb-3">
@@ -22,7 +17,7 @@ function clearData() {
           <img class="rounded-circle" :src="$discord().userAvatar(user)">
           <span class="align-middle">{{ ` ${user.username}#${user.discriminator}` }}</span>
         </button>
-        <button class="btn btn-primary" :onClick="clearData">
+        <button class="btn btn-primary" :onClick="clear">
           Clear token
         </button>
       </div>

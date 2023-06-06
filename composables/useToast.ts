@@ -7,12 +7,19 @@ export default function () {
   const showSuccess = (description: string, title = "Success") => showToast(title, description, "success");
   const showInfo = (description: string, title = "Info") => showToast(title, description, "info");
   const showWarning = (description: string, title = "Warning") => showToast(title, description, "warning");
-  const showError = (description: string, title = "Error") => showToast(title, description, "danger");
 
-  function handleError(error: unknown) {
-    console.error(error);
-    if (error instanceof Error) { showError(error.message, error.name); }
-    else { showError(`${error}`); }
+  function showError(error: unknown, title = "Error") {
+    let description;
+    if (typeof error == "string") {
+      description = error;
+    } else if (error instanceof Error) {
+      title = error.name ?? title;
+      description = error.message;
+    }
+    else {
+      description = `${error}`;
+    }
+    showToast(title, description, "danger");
   }
 
   return {
@@ -20,7 +27,6 @@ export default function () {
     showSuccess,
     showInfo,
     showWarning,
-    showError,
-    handleError
+    showError
   };
 }

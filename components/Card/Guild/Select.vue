@@ -25,7 +25,7 @@ watchEffect(() => {
 </script>
 <template>
   <div class="input-group">
-    <label class="input-group-text font-monospace">Server</label>
+    <span class="input-group-text font-monospace">Server</span>
     <select v-model="selectedID" class="form-select" :disabled="list.length == 0">
       <option key="" value="">
         Choose server...
@@ -40,7 +40,9 @@ watchEffect(() => {
   </div>
 </template>
 <style scoped>
-.btn {
+.btn,
+span {
   width: 6rem;
+  display: block;
 }
 </style>

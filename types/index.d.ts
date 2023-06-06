@@ -7,3 +7,9 @@ export interface GuildData {
   emojis: Emoji[]
   stickers: Sticker[]
 }
+
+export interface ButtonStates {
+  emojiZIP: boolean
+  emojiJSON: boolean
+  stickerZIP: boolean
+}

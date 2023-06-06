@@ -1,18 +1,10 @@
 <script setup lang="ts">
 import { StickerFormatType } from "discord-api-types/v10";
+import { ButtonStates } from "~/types";
 
-const buttons = useState<State>();
-interface State {
-  emojiZIP: boolean
-  emojiJSON: boolean
-  stickerZIP: boolean
-}
+const buttons = useState<ButtonStates>();
 
-const {
-  saveEmojiZIP,
-  saveEmojiJSON,
-  saveStickerZIP
-} = useExport();
+const { saveEmojiZIP, saveEmojiJSON, saveStickerZIP } = useExport();
 const Toast = useToast();
 const { guildData } = useStore();
 
@@ -26,37 +18,42 @@ watchEffect(() => {
   if (hasLottie) { import("@lottiefiles/lottie-player"); }
 });
 
-function exportEmojisJSON() {
-  console.log("Generating JSON");
-  buttons.value.emojiJSON = false;
-  saveEmojiJSON(guildData.value);
-  Toast.showSuccess("JSON generated");
-  buttons.value.emojiJSON = true;
+function saveEmojisJSON() {
+  try {
+    buttons.value.emojiJSON = false;
+    saveEmojiJSON(guildData.value);
+    Toast.showSuccess("JSON generated");
+  } catch (error) {
+    console.error(error);
+    Toast.showError(error);
+  } finally {
+    buttons.value.emojiJSON = true;
+  }
 }
 
-async function exportEmojisZIP() {
-  console.log("Generating ZIP");
+async function saveEmojisZIP() {
   try {
     buttons.value.emojiZIP = false;
     Toast.showInfo("Creating ZIP archive");
     await saveEmojiZIP(guildData.value);
     Toast.showSuccess("ZIP archive created");
   } catch (error) {
-    Toast.handleError(error);
+    console.error(error);
+    Toast.showError(error);
   } finally {
     buttons.value.emojiZIP = true;
   }
 }
 
-async function exportStickersZIP() {
-  console.log("Generating ZIP");
+async function saveStickersZIP() {
   try {
     buttons.value.stickerZIP = false;
     Toast.showInfo("Creating ZIP archive");
     await saveStickerZIP(guildData.value);
     Toast.showSuccess("ZIP archive created");
   } catch (error) {
-    Toast.handleError(error);
+    console.error(error);
+    Toast.showError(error);
   } finally {
     buttons.value.stickerZIP = true;
   }
@@ -86,12 +83,12 @@ async function exportStickersZIP() {
           <div class="d-flex">
             <div class="btn-group me-1">
               <ButtonLabel text="Emojis" />
-              <Button text="Download ZIP" :on-click="exportEmojisZIP" :disabled="!buttons.emojiZIP" />
-              <Button text="Download JSON" :on-click="exportEmojisJSON" :disabled="!buttons.emojiJSON" />
+              <Button text="Download ZIP" :on-click="saveEmojisZIP" :disabled="!buttons.emojiZIP" />
+              <Button text="Download JSON" :on-click="saveEmojisJSON" :disabled="!buttons.emojiJSON" />
             </div>
             <div class="btn-group">
               <ButtonLabel text="Stickers" />
-              <Button text="Download ZIP" :on-click="exportStickersZIP" :disabled="!buttons.stickerZIP" />
+              <Button text="Download ZIP" :on-click="saveStickersZIP" :disabled="!buttons.stickerZIP" />
             </div>
           </div>
           <AlertDownload />
