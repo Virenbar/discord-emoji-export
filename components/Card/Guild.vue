@@ -1,11 +1,9 @@
 <script setup lang="ts">
-const { token, userData, guildData, userAvatar } = useDiscord();
+const { user, guilds, clear } = useStore();
 
 function clearData() {
-  //localStorage.clear();
-  token.value = "";
-  userData.value = { guilds: [] };
-  guildData.value = { id: "", name: "", emojis: [], stickers: [] };
+  localStorage.clear();
+  clear();
 }
 </script>
 <template>
@@ -19,10 +17,10 @@ function clearData() {
           How to get Token
         </button>
       </div>
-      <div v-if="userData.user" class="btn-group">
+      <div v-if="user" class="btn-group">
         <button class="btn btn-secondary">
-          <img class="rounded-circle" :src="userAvatar(userData.user)">
-          <span class="align-middle">{{ ` ${userData.user.username}#${userData.user.discriminator}` }}</span>
+          <img class="rounded-circle" :src="$discord().userAvatar(user)">
+          <span class="align-middle">{{ ` ${user.username}#${user.discriminator}` }}</span>
         </button>
         <button class="btn btn-primary" :onClick="clearData">
           Clear token
@@ -42,7 +40,7 @@ function clearData() {
     </div>
     <div class="card-footer text-muted">
       <div class="float-end">
-        {{ userData.guilds.length }} servers
+        {{ guilds.length }} servers
       </div>
     </div>
   </div>

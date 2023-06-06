@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { StickerFormatType } from "discord-api-types/v10";
+
 const buttons = useState<State>();
 interface State {
   emojiZIP: boolean
@@ -12,12 +14,16 @@ const {
   saveStickerZIP
 } = useExport();
 const Toast = useToast();
-const { guildData } = useDiscord();
+const { guildData } = useStore();
 
 watchEffect(() => {
-  const hasEmojis = guildData.value.emojis.length > 0;
-  const hasStickers = guildData.value.stickers.length > 0;
+  const guild = guildData.value;
+  const hasEmojis = guild.emojis.length > 0;
+  const hasStickers = guild.stickers.length > 0;
+  const hasLottie = guild.stickers.some(S => S.format_type == StickerFormatType.Lottie);
+
   buttons.value = { emojiZIP: hasEmojis, emojiJSON: hasEmojis, stickerZIP: hasStickers };
+  if (hasLottie) { import("@lottiefiles/lottie-player"); }
 });
 
 function exportEmojisJSON() {

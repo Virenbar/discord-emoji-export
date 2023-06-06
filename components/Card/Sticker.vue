@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { APISticker, StickerFormatType } from "discord-api-types/v10";
-const props = defineProps<Props>();
-interface Props { sticker: APISticker }
+const props = defineProps<{ sticker: APISticker }>();
 
-const { stickerURL } = useDiscord();
-const { saveSticker } = useExport();
 const Toast = useToast();
-
+const { stickerURL } = useDiscord();
 const url = stickerURL(props.sticker);
 
-const download = async () => {
+async function download() {
   try {
+    const { saveSticker } = useExport();
     await saveSticker(props.sticker);
   } catch (e) {
     Toast.handleError(e);
   }
-};
+}
 </script>
 <template>
   <div class="card m-1 border-primary">
@@ -24,10 +22,10 @@ const download = async () => {
     </div>
     <div class="card-body d-flex flex-column text-center">
       <div class="wrapper">
-        <a v-if="props.sticker.format_type != StickerFormatType.Lottie" class="align-items-center" target="_blank" rel="noopener noreferrer" :href="url">
+        <lottie-player v-if="props.sticker.format_type == StickerFormatType.Lottie" autoplay loop :src="useCORS(url)" speed="1" />
+        <a v-else class="align-items-center" target="_blank" rel="noopener noreferrer" :href="url">
           <img :src="`${url}?size=128`" :alt="props.sticker.tags">
         </a>
-        <lottie-player v-else autoplay loop :src="useCORS(url)" speed="1" />
       </div>
       <button class="btn btn-primary" :onClick="download">
         Download

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const Toast = useToast();
-const { token, userData, getMe, getGuilds } = useDiscord();
+const { token, user, guilds } = useStore();
+const { getMe, getGuilds } = useDiscord();
+
 const input = useState<string>("input");
 
 onMounted(async () => {
@@ -15,10 +17,9 @@ onMounted(async () => {
 async function initDiscord(input: string) {
   try {
     token.value = input;
-    const user = await getMe();
-    const guilds = await getGuilds();
+    user.value = await getMe();
+    guilds.value = await getGuilds();
     localStorage.setItem("token", input);
-    userData.value = { user, guilds };
     return true;
   } catch (error) {
     Toast.handleError(error);
@@ -48,3 +49,8 @@ async function setToken() {
     </button>
   </div>
 </template>
+<style scoped>
+.btn {
+  width: 6rem;
+}
+</style>

@@ -37,19 +37,19 @@ Website for exporting emojis and stickers from any discord server you are in.
 
 1. Clone repository
 
-2. Install depencies
+2. Install dependencies
 
     ```bash
     yarn
     ```
 
-3. Build and start server
+3. Build and start dev server
 
     ```bash
-    yarn start
+    yarn dev
     ```
 
-4. Open: <http://localhost:8080>
+4. Open: <http://localhost:3000>
 
 ## JSON format
 

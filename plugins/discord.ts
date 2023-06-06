@@ -1,20 +1,16 @@
 import {
-  APIEmoji,
-  APISticker,
-  APIUser,
   CDNRoutes,
   DefaultUserAvatarAssets,
   ImageFormat,
-  RESTAPIPartialCurrentUserGuild,
   RESTError,
   RouteBases,
   Routes,
   StickerFormatType
 } from "discord-api-types/v10";
-import { Emojis, Guilds, Stickers, User } from "~/types";
+import { Emoji, Guild, Sticker, User } from "~/types";
 
 export default defineNuxtPlugin(() => {
-  const token = useState<string>("token", () => "");
+  const { token } = useStore();
 
   async function fetchAPI<T>(path: string) {
     const url = `${RouteBases.api}${path}`;
@@ -26,22 +22,22 @@ export default defineNuxtPlugin(() => {
     return await response.json() as T;
   }
 
-  function userAvatar(user: APIUser) {
+  function userAvatar(user: User) {
     const discriminator = parseInt(user.discriminator) % 5 as DefaultUserAvatarAssets;
     return (user.avatar)
       ? `${RouteBases.cdn}${CDNRoutes.userAvatar(user.id, user.avatar, ImageFormat.PNG)}?size=32`
       : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(discriminator)}?size=32`;
   }
 
-  function guildIcon(guild: RESTAPIPartialCurrentUserGuild) {
+  function guildIcon(guild: Guild) {
     return (guild.icon)
       ? `${RouteBases.cdn}${CDNRoutes.guildIcon(guild.id, guild.icon, ImageFormat.PNG)}?size=32`
       : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(0)}?size=32`;
   }
 
-  function emojiFormat(emoji: APIEmoji) { return emoji.animated ? ImageFormat.GIF : ImageFormat.PNG; }
+  function emojiFormat(emoji: Emoji) { return emoji.animated ? ImageFormat.GIF : ImageFormat.PNG; }
 
-  function stickerFormat(sticker: APISticker) {
+  function stickerFormat(sticker: Sticker) {
     switch (sticker.format_type) {
       case StickerFormatType.Lottie:
         return ImageFormat.Lottie;
@@ -56,16 +52,15 @@ export default defineNuxtPlugin(() => {
 
   function discord() {
     return {
-      token,
       getMe: () => fetchAPI<User>(Routes.user("@me")),
-      getGuilds: () => fetchAPI<Guilds>(Routes.userGuilds()),
-      getGuildEmojis: (guildID: string) => fetchAPI<Emojis>(Routes.guildEmojis(guildID)),
-      getGuildStickers: (guildID: string) => fetchAPI<Stickers>(Routes.guildStickers(guildID)),
-      emojiID: (emoji: APIEmoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
-      emojiURL: (emoji: APIEmoji) => `${RouteBases.cdn}${CDNRoutes.emoji(emoji.id ?? "", emojiFormat(emoji))}`,
-      emojiName: (emoji: APIEmoji) => `${emoji.name}.${emojiFormat(emoji)}`,
-      stickerURL: (sticker: APISticker) => `${RouteBases.cdn}${CDNRoutes.sticker(sticker.id, stickerFormat(sticker))}`,
-      stickerName: (sticker: APISticker) => `${sticker.name}.${stickerFormat(sticker)}`,
+      getGuilds: () => fetchAPI<Guild[]>(Routes.userGuilds()),
+      getGuildEmojis: (guildID: string) => fetchAPI<Emoji[]>(Routes.guildEmojis(guildID)),
+      getGuildStickers: (guildID: string) => fetchAPI<Sticker[]>(Routes.guildStickers(guildID)),
+      emojiID: (emoji: Emoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
+      emojiURL: (emoji: Emoji) => `${RouteBases.cdn}${CDNRoutes.emoji(emoji.id ?? "", emojiFormat(emoji))}`,
+      emojiName: (emoji: Emoji) => `${emoji.name}.${emojiFormat(emoji)}`,
+      stickerURL: (sticker: Sticker) => `${RouteBases.cdn}${CDNRoutes.sticker(sticker.id, stickerFormat(sticker))}`,
+      stickerName: (sticker: Sticker) => `${sticker.name}.${stickerFormat(sticker)}`,
       guildIcon,
       userAvatar
     };

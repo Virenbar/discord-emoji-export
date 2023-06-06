@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { APIEmoji } from "discord-api-types/v10";
-const props = defineProps<Props>();
-interface Props { emoji: APIEmoji }
+const props = defineProps<{ emoji: APIEmoji }>();
 
-const { emojiID, emojiURL } = useDiscord();
-const { saveEmoji } = useExport();
 const Toast = useToast();
-
+const { emojiID, emojiURL } = useDiscord();
 const url = emojiURL(props.emoji);
 
-const copyID = () => {
+function download() {
+  const { saveEmoji } = useExport();
+  saveEmoji(props.emoji);
+}
+
+function copyID() {
   const id = `<${emojiID(props.emoji)}>`;
   navigator.clipboard.writeText(id);
   Toast.showSuccess(`ID: ${id}`, "Emoji ID copied");
-};
-
-const download = () => { saveEmoji(props.emoji); };
+}
 </script>
 <template>
   <div class="card m-1 border-primary">
