@@ -1,5 +1,5 @@
 <template>
-  <div class="container overflow-hidden">
+  <div class="container p-3">
     <CardGuild />
     <CardExport />
     <ModalToken />

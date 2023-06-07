@@ -24,15 +24,29 @@ export default defineNuxtPlugin(() => {
 
   function userAvatar(user: User) {
     const discriminator = parseInt(user.discriminator) % 5 as DefaultUserAvatarAssets;
-    return (user.avatar)
-      ? `${RouteBases.cdn}${CDNRoutes.userAvatar(user.id, user.avatar, ImageFormat.PNG)}?size=32`
-      : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(discriminator)}?size=32`;
+    const avatar = user.avatar;
+    let path;
+    if (!avatar) {
+      path = `${CDNRoutes.defaultUserAvatar(discriminator)}`;
+    } else if (avatar.startsWith("a_")) {
+      path = `${CDNRoutes.userAvatar(user.id, avatar, ImageFormat.GIF)}`;
+    } else {
+      path = `${CDNRoutes.userAvatar(user.id, avatar, ImageFormat.PNG)}`;
+    }
+    return `${RouteBases.cdn}${path}?size=32`;
   }
 
   function guildIcon(guild: Guild) {
-    return (guild.icon)
-      ? `${RouteBases.cdn}${CDNRoutes.guildIcon(guild.id, guild.icon, ImageFormat.PNG)}?size=32`
-      : `${RouteBases.cdn}${CDNRoutes.defaultUserAvatar(0)}?size=32`;
+    const icon = guild.icon;
+    let path;
+    if (!icon) {
+      path = `${CDNRoutes.defaultUserAvatar(0)}`;
+    } else if (icon.startsWith("a_")) {
+      path = `${CDNRoutes.guildIcon(guild.id, icon, ImageFormat.GIF)}`;
+    } else {
+      path = `${CDNRoutes.guildIcon(guild.id, icon, ImageFormat.PNG)}`;
+    }
+    return `${RouteBases.cdn}/${path}?size=32`;
   }
 
   function emojiFormat(emoji: Emoji) { return emoji.animated ? ImageFormat.GIF : ImageFormat.PNG; }

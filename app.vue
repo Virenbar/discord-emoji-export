@@ -13,10 +13,10 @@ useSeoMeta({
 </script>
 <template>
   <div class="min-vh-100 d-flex flex-column">
-    <main id="main" class="my-3 flex-grow-1 flex-shrink-0">
+    <main id="main" class="flex-grow-1 flex-shrink-0">
       <NuxtPage />
     </main>
     <PageFooter />
-    <div class="toast-container position-fixed p-3" />
+    <div class="toast-container position-fixed py-3 px-1" />
   </div>
 </template>

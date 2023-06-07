@@ -51,7 +51,7 @@ Website for exporting emojis and stickers from any discord server you are in.
 
 4. Open: <http://localhost:3000>
 
-## JSON format
+## [JSON schema](https://virenbar.github.io/discord-emoji-export/schemas/emojis.schema.json)
 
 ```json
 {

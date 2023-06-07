@@ -1,25 +1,6 @@
-import { APIEmoji, APISticker } from "discord-api-types/v10";
 import FS from "file-saver";
 import JSZip from "jszip";
-import { GuildData } from "../types";
-
-async function fetchEmoji(emoji: APIEmoji) {
-  const Discord = useDiscord();
-  const name = Discord.emojiName(emoji);
-  const url = Discord.emojiURL(emoji);
-  const blob = await fetch(url).then(r => r.blob());
-  return { name, blob };
-}
-
-async function fetchSticker(sticker: APISticker) {
-  const Discord = useDiscord();
-  const name = Discord.stickerName(sticker);
-  // stickers endpoint has no "Access-Control-Allow-Origin" header
-  // const url = Discord.stickerURL(sticker);
-  const url = useCORS(Discord.stickerURL(sticker));
-  const blob = await fetch(url).then(r => r.blob());
-  return { name, blob };
-}
+import { Emoji, GuildData, Sticker } from "../types";
 
 function fixNames(files: File[]) {
   const names: { [index: string]: number } = {};
@@ -35,15 +16,22 @@ function fixNames(files: File[]) {
 
 async function saveZIP(guild: GuildData, files: File[]) {
   const name = guild.name.replace(/(\W+)/gi, "-");
-
   const ZIP = new JSZip();
   files.forEach(i => ZIP.file(i.name, i.blob));
   const A = await ZIP.generateAsync({ type: "blob" });
   FS.saveAs(A, `${name}.zip`);
 }
 
-// Emojis
-async function saveEmoji(emoji: APIEmoji) {
+//#region Emojis
+async function fetchEmoji(emoji: Emoji) {
+  const { emojiName, emojiURL } = useDiscord();
+  const name = emojiName(emoji);
+  const url = emojiURL(emoji);
+  const blob = await fetch(url).then(r => r.blob());
+  return { name, blob };
+}
+
+async function saveEmoji(emoji: Emoji) {
   const { name, blob } = await fetchEmoji(emoji);
   FS.saveAs(blob, name);
 }
@@ -55,13 +43,13 @@ async function saveEmojiZIP(guild: GuildData) {
 }
 
 function saveEmojiJSON(guild: GuildData) {
-  const Discord = useDiscord();
+  const { emojiID, emojiURL } = useDiscord();
   const emojisJSON = guild.emojis.map(e => {
     return {
       name: e.name,
       id: e.id,
-      identifier: Discord.emojiID(e),
-      url: Discord.emojiURL(e)
+      identifier: emojiID(e),
+      url: emojiURL(e)
     };
   });
   const guildJSON = {
@@ -75,8 +63,19 @@ function saveEmojiJSON(guild: GuildData) {
   FS.saveAs(blob, `${name}.json`);
 }
 
-// Stickers
-async function saveSticker(sticker: APISticker) {
+//#endregion
+//#region Stickers
+async function fetchSticker(sticker: Sticker) {
+  const { stickerName, stickerURL } = useDiscord();
+  const name = stickerName(sticker);
+  // stickers endpoint has no "Access-Control-Allow-Origin" header
+  // const url = stickerURL(sticker);
+  const url = useCORS(stickerURL(sticker));
+  const blob = await fetch(url).then(r => r.blob());
+  return { name, blob };
+}
+
+async function saveSticker(sticker: Sticker) {
   const { name, blob } = await fetchSticker(sticker);
   FS.saveAs(blob, name);
 }
@@ -87,6 +86,7 @@ async function saveStickerZIP(guild: GuildData) {
   fixNames(images);
   saveZIP(guild, images);
 }
+//#endregion
 
 export default function () {
   return {

@@ -46,9 +46,9 @@ $modal-content-bg: $background-primary;
 // Forms
 $input-bg: $channel-text-area-background;
 $input-color: $text-normal;
-$input-border-color: $background-tertiary ;
-$input-group-addon-color: $text-muted ;
-$input-group-addon-bg: $input-bg ;
+$input-border-color: $background-tertiary;
+$input-group-addon-color: $text-muted;
+$input-group-addon-bg: $input-bg;
 $input-disabled-bg: $input-bg;
 
 $form-select-disabled-bg: $input-bg;
@@ -61,3 +61,6 @@ $form-file-button-color: $red  !default;*/
 // Alert
 $alert-padding-x: .5rem;
 $alert-padding-y: .5rem;
+
+// Toast
+$toast-max-width: 300px

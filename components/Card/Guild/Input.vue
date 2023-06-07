@@ -12,6 +12,7 @@ onMounted(async () => {
 });
 
 async function trySetToken(input: string) {
+  if (!input) { return false; }
   try {
     token.value = input;
     user.value = await getMe();
