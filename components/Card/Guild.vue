@@ -13,9 +13,9 @@ const { user, guilds, clear } = useStore();
         </button>
       </div>
       <div v-if="user" class="btn-group">
-        <button class="btn btn-secondary">
+        <button class="btn btn-secondary align-middle">
           <img class="rounded-circle" :src="$discord().userAvatar(user)">
-          <span class="align-middle">{{ ` ${user.username}#${user.discriminator}` }}</span>
+          <span>&nbsp;{{ $discord().userName(user) }}</span>
         </button>
         <button class="btn btn-primary" :onClick="clear">
           Clear token

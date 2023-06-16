@@ -22,6 +22,12 @@ export default defineNuxtPlugin(() => {
     return await response.json() as T;
   }
 
+  function userName(user: User) {
+    return user?.discriminator == "0"
+      ? user?.username
+      : `${user?.username}#${user?.discriminator}`;
+  }
+
   function userAvatar(user: User) {
     const discriminator = parseInt(user.discriminator) % 5 as DefaultUserAvatarAssets;
     const avatar = user.avatar;
@@ -77,6 +83,7 @@ export default defineNuxtPlugin(() => {
       stickerURL: (sticker: Sticker) => `${RouteBases.cdn}${CDNRoutes.sticker(sticker.id, stickerFormat(sticker))}`,
       stickerName: (sticker: Sticker) => `${sticker.name}.${stickerFormat(sticker)}`,
       guildIcon,
+      userName,
       userAvatar
     };
   }

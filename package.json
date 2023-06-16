@@ -27,10 +27,10 @@
     "discord-api-types": "^0.37.0",
     "eslint": "^8.42.0",
     "nuxt": "^3.5.0",
-    "sass": "^1.62.0",
+    "sass": "^1.63.0",
     "sass-loader": "^13.3.0",
     "typescript": "^5.1.0",
-    "webpack": "^5.85.0"
+    "webpack": "^5.87.0"
   },
   "type": "module",
   "private": true
