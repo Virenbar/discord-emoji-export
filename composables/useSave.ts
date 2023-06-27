@@ -2,27 +2,19 @@ import FS from "file-saver";
 import JSZip from "jszip";
 import { Emoji, GuildData, Sticker } from "../types";
 
+const fetchBLOB = (url: string) => fetch(url).then(r => r.blob());
+const guildName = (guild: GuildData) => guild.name.replace(/(\W+)/gi, "-");
+const isSticker = (content: Content): content is Sticker => (<Sticker>content).type !== undefined;
+
 function fixNames(files: File[]) {
   const names: { [index: string]: number } = {};
   files.forEach(i => {
     const name = i.name;
     const count = names[name] || 0;
     names[name] = count + 1;
-    if (count > 0) {
-      i.name = i.name.replace(/\.\w+$/, `~${count}$&`);
-    }
+    if (count > 0) { i.name = i.name.replace(/\.\w+$/, `~${count}$&`); }
   });
 }
-
-const guildName = (guild: GuildData) => guild.name.replace(/(\W+)/gi, "-");
-const isSticker = (content: Content): content is Sticker => (<Sticker>content).type !== undefined;
-const fetchBlob = (url: string) => fetch(url).then(r => r.blob());
-// async function saveZIP(name: string, files: File[]) {
-//   const ZIP = new JSZip();
-//   files.forEach(i => ZIP.file(i.name, i.blob));
-//   const A = await ZIP.generateAsync({ type: "blob" });
-//   FS.saveAs(A, `${name}.zip`);
-// }
 
 function fetchContent(content: Content) {
   if (isSticker(content)) {
@@ -37,11 +29,7 @@ async function saveFile(content: Content) {
   FS.saveAs(blob, name);
 }
 
-async function saveZIP(guild: GuildData, content: ContentType) {
-  // const requests = content == "Emoji"
-  //   ? guild.emojis.map(fetchEmoji)
-  //   : guild.stickers.map(fetchSticker);
-
+async function saveZIP(guild: GuildData, content: "Emoji" | "Sticker") {
   const contents = ((): Content[] => {
     switch (content) {
       case "Emoji": return guild.emojis;
@@ -52,7 +40,7 @@ async function saveZIP(guild: GuildData, content: ContentType) {
 
   const name = `${guildName(guild)}-${content}`;
   const files = await Promise.all(requests);
-  if (content == "Emoji") { fixNames(files); }
+  fixNames(files);
 
   const ZIP = new JSZip();
   files.forEach(i => ZIP.file(i.name, i.blob));
@@ -60,7 +48,6 @@ async function saveZIP(guild: GuildData, content: ContentType) {
   FS.saveAs(A, `${name}.zip`);
 }
 
-//#region Emojis
 function saveEmojiJSON(guild: GuildData) {
   const { emojiID, emojiURL } = useDiscord();
   const emojisJSON = guild.emojis.map(e => {
@@ -85,31 +72,26 @@ function saveEmojiJSON(guild: GuildData) {
 async function fetchEmoji(emoji: Emoji) {
   const { emojiName, emojiURL } = useDiscord();
   const name = emojiName(emoji);
-  const url = emojiURL(emoji);
-  const blob = await fetchBlob(url);
+  const blob = await fetchBLOB(emojiURL(emoji));
   return { name, blob };
 }
-//#endregion
 
-//#region Stickers
 async function fetchSticker(sticker: Sticker) {
   const { stickerName, stickerURL } = useDiscord();
   const name = stickerName(sticker);
   // stickers endpoint has no "Access-Control-Allow-Origin" header
-  // const url = stickerURL(sticker);
-  const url = useCORS(stickerURL(sticker));
-  const blob = await fetchBlob(url);
+  // const blob = await fetchBLOB(stickerURL(sticker));
+  const blob = await fetchBLOB(useCORS(stickerURL(sticker)));
   return { name, blob };
 }
-//#endregion
 
 export default function () {
   return {
     saveEmoji: (emoji: Emoji) => saveFile(emoji),
-    saveEmojiZIP: (guild: GuildData) => saveZIP(guild, "Emoji"),
-    saveEmojiJSON,
     saveSticker: (sticker: Sticker) => saveFile(sticker),
-    saveStickerZIP: (guild: GuildData) => saveZIP(guild, "Sticker")
+    saveEmojiZIP: (guild: GuildData) => saveZIP(guild, "Emoji"),
+    saveStickerZIP: (guild: GuildData) => saveZIP(guild, "Sticker"),
+    saveEmojiJSON
   };
 }
 
@@ -118,5 +100,4 @@ interface File {
   blob: Blob
 }
 
-type ContentType = "Emoji" | "Sticker"
 type Content = Emoji | Sticker;

@@ -7,7 +7,7 @@ const { emojiID, emojiURL } = useDiscord();
 const url = emojiURL(props.emoji);
 
 function download() {
-  const { saveEmoji } = useExport();
+  const { saveEmoji } = useSave();
   saveEmoji(props.emoji);
 }
 

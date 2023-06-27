@@ -8,7 +8,7 @@ const url = stickerURL(props.sticker);
 
 async function download() {
   try {
-    const { saveSticker } = useExport();
+    const { saveSticker } = useSave();
     await saveSticker(props.sticker);
   } catch (error) {
     console.error(error);

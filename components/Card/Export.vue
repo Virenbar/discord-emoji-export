@@ -4,7 +4,7 @@ import { ButtonStates } from "~/types";
 
 const buttons = useState<ButtonStates>();
 
-const { saveEmojiZIP, saveEmojiJSON, saveStickerZIP } = useExport();
+const { saveEmojiZIP, saveEmojiJSON, saveStickerZIP } = useSave();
 const Toast = useToast();
 const { guildData } = useStore();
 
