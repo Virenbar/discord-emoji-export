@@ -61,8 +61,7 @@ export default defineNuxtPlugin(() => {
 
   function toast() {
     return {
-      showToast,
-      showError
+      showToast
     };
   }
 
