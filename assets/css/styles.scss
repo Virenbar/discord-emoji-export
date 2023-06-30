@@ -1,0 +1,11 @@
+@import "variables.scss";
+@import "bootstrap.scss";
+
+body {
+    overflow-y: overlay;
+}
+
+footer {
+    background-color: $background-tertiary;
+    font-family: $font-family-code;
+}

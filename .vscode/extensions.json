@@ -2,8 +2,9 @@
     "recommendations": [
         "dbaeumer.vscode-eslint",
         "naumovs.color-highlight",
-        "visualstudioexptteam.vscodeintellicode",
         "zignd.html-css-class-completion",
-        "ecmel.vscode-html-css"
+        "ecmel.vscode-html-css",
+        "stylelint.vscode-stylelint",
+        "Vue.volar"
     ]
 }

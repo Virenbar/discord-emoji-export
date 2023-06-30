@@ -6,7 +6,7 @@ Website for exporting emojis and stickers from any discord server you are in.
 ## Features
 
 * Browse emojis in server
-* Browse stickers in server (except lottie)
+* Browse stickers in server
 * Download emojis in ZIP archive
 * Download stickers in ZIP archive
 * Export emojis as JSON (with links to emojis)
@@ -22,7 +22,7 @@ Website for exporting emojis and stickers from any discord server you are in.
 * Select any request
 * Find authorization header
 
-![Network](./static/images/network.png)
+![Network](./public/images/network.png)
 
 ### Using application tab (browser only)
 
@@ -31,27 +31,27 @@ Website for exporting emojis and stickers from any discord server you are in.
 * Select local storage
 * Search for `token` key
 
-![Application](./static/images/application.png)
+![Application](./public/images/application.png)
 
 ## Running locally
 
 1. Clone repository
 
-2. Install depencies
+2. Install dependencies
 
     ```bash
     yarn
     ```
 
-3. Build and start server
+3. Build and start dev server
 
     ```bash
-    yarn start
+    yarn dev
     ```
 
-4. Open: <http://localhost:8080>
+4. Open: <http://localhost:3000>
 
-## JSON format
+## [JSON schema](https://virenbar.github.io/discord-emoji-export/schemas/emojis.schema.json)
 
 ```json
 {
