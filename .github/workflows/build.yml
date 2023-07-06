@@ -1,0 +1,32 @@
+name: Build Artifact
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_call:
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      NUXT_APP_BASE_URL: /discord-emoji-export/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+
+      - name: Build website
+        run: |
+          yarn install --immutable --immutable-cache --check-cache
+          yarn generate
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: .output/public
