@@ -2,8 +2,10 @@ import FS from "file-saver";
 import JSZip from "jszip";
 import { Emoji, GuildData, Sticker } from "../types";
 
+const $schema = "https://virenbar.github.io/discord-emoji-export/schemas/emojis.schema.json";
+
 const fetchBLOB = (url: string) => fetch(url).then(r => r.blob());
-const guildName = (guild: GuildData) => guild.name.replace(/(\W+)/gi, "-");
+const guildName = (guild: GuildData) => guild.name.replace(/(\W+)/gi, " ").trim();
 const isSticker = (content: Content): content is Sticker => (<Sticker>content).type !== undefined;
 
 function fixNames(files: File[]) {
@@ -11,8 +13,8 @@ function fixNames(files: File[]) {
   files.forEach(i => {
     const name = i.name;
     const count = names[name] || 0;
-    names[name] = count + 1;
     if (count > 0) { i.name = i.name.replace(/\.\w+$/, `~${count}$&`); }
+    names[name] = count + 1;
   });
 }
 
@@ -22,6 +24,22 @@ function fetchContent(content: Content) {
   } else {
     return fetchEmoji(content);
   }
+}
+
+async function fetchEmoji(emoji: Emoji) {
+  const { emojiName, emojiURL } = useDiscord();
+  const name = emojiName(emoji);
+  const blob = await fetchBLOB(emojiURL(emoji));
+  return { name, blob };
+}
+
+async function fetchSticker(sticker: Sticker) {
+  const { stickerName, stickerURL } = useDiscord();
+  const name = stickerName(sticker);
+  // stickers endpoint has no "Access-Control-Allow-Origin" header
+  // const blob = await fetchBLOB(stickerURL(sticker));
+  const blob = await fetchBLOB(useCORS(stickerURL(sticker)));
+  return { name, blob };
 }
 
 async function saveFile(content: Content) {
@@ -59,30 +77,14 @@ function saveEmojiJSON(guild: GuildData) {
     };
   });
   const guildJSON = {
+    $schema,
     guildName: guild.name,
     guildID: guild.id,
     emojis: emojisJSON
   };
-  const name = guild.name.replace(/(\W+)/gi, "-");
   const json = JSON.stringify(guildJSON, null, 4);
   const blob = new Blob([json], { type: "text/plain;charset=utf-8" });
-  FS.saveAs(blob, `${name}.json`);
-}
-
-async function fetchEmoji(emoji: Emoji) {
-  const { emojiName, emojiURL } = useDiscord();
-  const name = emojiName(emoji);
-  const blob = await fetchBLOB(emojiURL(emoji));
-  return { name, blob };
-}
-
-async function fetchSticker(sticker: Sticker) {
-  const { stickerName, stickerURL } = useDiscord();
-  const name = stickerName(sticker);
-  // stickers endpoint has no "Access-Control-Allow-Origin" header
-  // const blob = await fetchBLOB(stickerURL(sticker));
-  const blob = await fetchBLOB(useCORS(stickerURL(sticker)));
-  return { name, blob };
+  FS.saveAs(blob, `${guildName(guild)}.json`);
 }
 
 export default function () {
