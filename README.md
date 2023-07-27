@@ -1,4 +1,4 @@
-# discord-emoji-export [![Build artifact](https://img.shields.io/github/actions/workflow/status/Virenbar/discord-emoji-export/publish.yml?label=Build&logo=github)](https://github.com/Virenbar/discord-emoji-export/actions/workflows/publish.yml)
+# discord-emoji-export [![Build artifact][build-src]][build-href] [![Netlify Status][netlify-src]][netlify-href]
 
 Website for exporting emojis and stickers from any discord server you are in.
 ![page](./assets/page.png)
@@ -71,4 +71,14 @@ Website for exporting emojis and stickers from any discord server you are in.
 
 ## CORS proxy
 
-Website uses [CORS proxy](https://github.com/Virenbar/cloudflare-cors-proxy) for stickers
+Website uses [CORS proxy][schema-href] for stickers
+
+<!-- Badges -->
+[build-src]: https://img.shields.io/github/actions/workflow/status/Virenbar/discord-emoji-export/build.yml?label=Build&logo=github
+[build-href]: https://github.com/Virenbar/discord-emoji-export/actions/workflows/build.yml
+
+[netlify-src]: https://api.netlify.com/api/v1/badges/3c01e6cb-873d-4858-bef8-bf82eff1fab7/deploy-status
+[netlify-href]: https://app.netlify.com/sites/virenbar-discord-emoji/deploys
+
+<!-- Other -->
+[schema-href]: https://github.com/Virenbar/cloudflare-cors-proxy
