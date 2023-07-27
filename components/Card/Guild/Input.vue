@@ -3,6 +3,7 @@ const Toast = useToast();
 const { user, guilds, setToken, getToken } = useStore();
 const { token, getMe, getGuilds } = useDiscord();
 
+const tokenRegex = /(mfa\.[\w-]{20,})|([\w-]{20,}\.[\w-]{5,}\.[\w-]{20,})/;
 const input = useState<string>("input");
 
 onMounted(async () => {
@@ -31,7 +32,7 @@ async function trySetToken(input: string) {
 
 async function onClick() {
   const token = input.value;
-  const Match = /(\w+\.\w+\.\w+)/.exec(token);
+  const Match = tokenRegex.exec(token);
   if (Match?.length) {
     if (await trySetToken(Match[0])) {
       Toast.showInfo("Token set and saved");
