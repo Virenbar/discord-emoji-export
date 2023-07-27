@@ -3,6 +3,9 @@ useHead({
   title: "Discord Emoji Export",
   meta: [
     { name: "keywords", content: "download discord emojis, download discord stickers" }
+  ],
+  link: [
+    { rel: "icon", href: `${useRuntimeConfig().app.baseURL}favicon.ico` }
   ]
 });
 useSeoMeta({
