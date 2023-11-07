@@ -5,7 +5,7 @@ useHead({
     { name: "keywords", content: "download discord emojis, download discord stickers" }
   ],
   link: [
-    { rel: "icon", href: `${useBaseURL("/favicon.ico")}` }
+    { rel: "shortcut icon", href: `${useBaseURL("/favicon.ico")}` }
   ]
 });
 useSeoMeta({
