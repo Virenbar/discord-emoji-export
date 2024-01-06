@@ -27,7 +27,7 @@
     "discord-api-types": "^0.37.67",
     "eslint": "^8.56.0",
     "nuxt": "^3.9.0",
-    "sass": "^1.69.6",
+    "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
     "typescript": "^5.3.3",
     "webpack": "^5.89.0"
