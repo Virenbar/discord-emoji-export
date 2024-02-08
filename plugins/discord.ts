@@ -1,13 +1,13 @@
 import {
   CDNRoutes,
-  DefaultUserAvatarAssets,
   ImageFormat,
-  RESTError,
   RouteBases,
   Routes,
-  StickerFormatType
+  StickerFormatType,
+  type DefaultUserAvatarAssets,
+  type RESTError
 } from "discord-api-types/v10";
-import { Emoji, Guild, Sticker, User } from "~/types";
+import type { Emoji, Guild, Sticker, User } from "~/types";
 
 export default defineNuxtPlugin(() => {
   const token = useState<string>("token", () => "");
@@ -70,6 +70,12 @@ export default defineNuxtPlugin(() => {
     }
   }
 
+  function stickerURL(sticker: Sticker) {
+    // CDN returns "NoSuchKey" for gif stickers
+    const base = sticker.format_type == StickerFormatType.GIF ? "https://media.discordapp.net" : RouteBases.cdn;
+    return `${base}${CDNRoutes.sticker(sticker.id, stickerFormat(sticker))}`;
+  }
+
   function discord() {
     return {
       token,
@@ -80,7 +86,7 @@ export default defineNuxtPlugin(() => {
       emojiID: (emoji: Emoji) => `${emoji.animated ? "a" : ""}:${emoji.name}:${emoji.id}`,
       emojiURL: (emoji: Emoji) => `${RouteBases.cdn}${CDNRoutes.emoji(emoji.id ?? "", emojiFormat(emoji))}`,
       emojiName: (emoji: Emoji) => `${emoji.name}.${emojiFormat(emoji)}`,
-      stickerURL: (sticker: Sticker) => `${RouteBases.cdn}${CDNRoutes.sticker(sticker.id, stickerFormat(sticker))}`,
+      stickerURL,
       stickerName: (sticker: Sticker) => `${sticker.name}.${stickerFormat(sticker)}`,
       guildIcon,
       userName,

@@ -1,6 +1,8 @@
 <script setup lang="ts">
+const title = "Discord Emoji Export";
+const description = "Website for exporting emojis and stickers from any discord server you are in.";
 useHead({
-  title: "Discord Emoji Export",
+  title: title,
   meta: [
     { name: "keywords", content: "download discord emojis, download discord stickers" }
   ],
@@ -9,9 +11,11 @@ useHead({
   ]
 });
 useSeoMeta({
-  ogSiteName: "Discord Emoji Export",
   ogType: "website",
-  description: "Website for exporting emojis and stickers from any discord server you are in."
+  ogTitle: title,
+  ogSiteName: title,
+  ogDescription: description,
+  description: description
 });
 </script>
 <template>
