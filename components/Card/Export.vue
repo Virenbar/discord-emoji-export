@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { StickerFormatType } from "discord-api-types/v10";
-import { ButtonStates } from "~/types";
+import type { ButtonStates } from "~/types";
 
 const buttons = useState<ButtonStates>();
 

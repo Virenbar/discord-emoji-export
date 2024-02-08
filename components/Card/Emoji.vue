@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { APIEmoji } from "discord-api-types/v10";
-const props = defineProps<{ emoji: APIEmoji }>();
+import type { Emoji } from "~/types";
+const props = defineProps<{ emoji: Emoji }>();
 
 const Toast = useToast();
 const { emojiID, emojiURL } = useDiscord();

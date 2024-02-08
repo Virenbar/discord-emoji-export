@@ -1,6 +1,6 @@
 import FS from "file-saver";
 import JSZip from "jszip";
-import { Emoji, GuildData, Sticker } from "../types";
+import type { Emoji, GuildData, Sticker } from "../types";
 
 const $schema = "https://virenbar.github.io/discord-emoji-export/schemas/emojis.schema.json";
 

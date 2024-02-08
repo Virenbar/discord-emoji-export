@@ -15,5 +15,9 @@
         "^@nuxt/"
       ]
     }
-  ]
+  ],
+  "schedule": [
+    "every weekend"
+  ],
+  "assigneesFromCodeOwners": true
 }

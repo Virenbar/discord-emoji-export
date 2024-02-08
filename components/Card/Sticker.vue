@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { APISticker, StickerFormatType } from "discord-api-types/v10";
-const props = defineProps<{ sticker: APISticker }>();
+import { StickerFormatType } from "discord-api-types/v10";
+import type { Sticker } from "~/types";
+const props = defineProps<{ sticker: Sticker }>();
 
 const Toast = useToast();
 const { stickerURL } = useDiscord();

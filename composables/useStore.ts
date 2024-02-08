@@ -1,4 +1,4 @@
-import { Guild, GuildData, User } from "~/types";
+import type { Guild, GuildData, User } from "~/types";
 
 const Data: GuildData = { id: "", name: "", emojis: [], stickers: [] };
 
