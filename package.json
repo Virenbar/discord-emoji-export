@@ -24,7 +24,7 @@
     "@types/bootstrap": "^5.2.10",
     "@types/file-saver": "^2.0.7",
     "@types/lodash-es": "^4.17.12",
-    "discord-api-types": "^0.37.70",
+    "discord-api-types": "^0.37.71",
     "eslint": "^8.57.0",
     "nuxt": "^3.10.3",
     "sass": "^1.71.1",
