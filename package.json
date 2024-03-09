@@ -13,7 +13,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@lottiefiles/lottie-player": "^2.0.3",
+    "@lottiefiles/lottie-player": "^2.0.4",
     "bootstrap": "^5.3.3",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
@@ -24,12 +24,12 @@
     "@types/bootstrap": "^5.2.10",
     "@types/file-saver": "^2.0.7",
     "@types/lodash-es": "^4.17.12",
-    "discord-api-types": "^0.37.71",
+    "discord-api-types": "^0.37.73",
     "eslint": "^8.57.0",
     "nuxt": "^3.10.3",
     "sass": "^1.71.1",
     "sass-loader": "^14.1.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "webpack": "^5.90.3"
   },
   "type": "module",
