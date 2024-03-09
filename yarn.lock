@@ -689,10 +689,10 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@lottiefiles/lottie-player@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@lottiefiles/lottie-player/-/lottie-player-2.0.3.tgz#422e806df42a6022fd728045934870484897012c"
-  integrity sha512-f91pxEscvfgf/BbI+r+7HD0HJ9HP7ttWqx6FxxZIQe1Pr+hfjs+DsqusN2syWkqiUk07tilKFBJt3/cRZ4x3Kw==
+"@lottiefiles/lottie-player@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@lottiefiles/lottie-player/-/lottie-player-2.0.4.tgz#8dc825bbf83c9a5e3f232c019746c71818532df1"
+  integrity sha512-OU3HxAt7noWr+kzf59paS7/f4+IT1EupJIsf4h3RxsbljDaRtCunanIjchprNFYHdG+SobnyxwWKtvTDxjI5jg==
   dependencies:
     "@types/pako" "^1.0.1"
     lit "^2.1.2"
@@ -2779,10 +2779,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-discord-api-types@^0.37.71:
-  version "0.37.71"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.71.tgz#43b0855a4bf78d00bdca5b8d56e460b5985e9655"
-  integrity sha512-oYDVWoiQdblr9DpwOgpi5d78dVhPcoN9YZCCqYZf2T0v9+iICs7k2bYGumoHuYMtaIitpp5aQNs+2guVkgjbOA==
+discord-api-types@^0.37.73:
+  version "0.37.73"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.73.tgz#55637865a1803cb1ac273c244ff58faeca1c594f"
+  integrity sha512-mi915PBUxF1G233EwHKNegNAF/tVfiSRN9+hKwu0G3NpbtLXvWUxCuCjgSyY+QmQ6/Hvpqm0xs5HxzfvhAS20A==
 
 doctrine@^3.0.0:
   version "3.0.0"
@@ -6054,10 +6054,15 @@ type-fest@^3.8.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.13.1.tgz#bb744c1f0678bea7543a2d1ec24e83e68e8c8706"
   integrity sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==
 
-typescript@^5.2.2, typescript@^5.3.3:
+typescript@^5.2.2:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.3.tgz#b3ce6ba258e72e6305ba66f5c9b452aaee3ffe37"
   integrity sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==
+
+typescript@^5.4.2:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.2.tgz#0ae9cebcfae970718474fe0da2c090cad6577372"
+  integrity sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==
 
 ufo@^1.1.2, ufo@^1.2.0, ufo@^1.3.0, ufo@^1.3.1, ufo@^1.3.2, ufo@^1.4.0:
   version "1.4.0"
