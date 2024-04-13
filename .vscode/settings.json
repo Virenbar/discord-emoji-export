@@ -11,14 +11,12 @@
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar",
   },
-  "[typescript]": {
-    "editor.defaultFormatter": "Vue.volar",
-  },
   "[css]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   },
   "eslint.validate": [
     "javascript",
     "typescript"
-  ]
+  ],
+  "eslint.experimental.useFlatConfig": true
 }

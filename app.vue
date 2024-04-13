@@ -10,7 +10,7 @@ useHead({
     { rel: "shortcut icon", href: `${useBaseURL("/favicon.ico")}` }
   ]
 });
-useSeoMeta({
+useServerSeoMeta({
   ogType: "website",
   ogTitle: title,
   ogSiteName: title,

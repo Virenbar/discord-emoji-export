@@ -7,6 +7,9 @@ export default defineNuxtConfig({
       isCustomElement: (tag) => ["lottie-player"].includes(tag)
     }
   },
+  modules: [
+    "@nuxt/eslint"
+  ],
   runtimeConfig: {
     public: {
       repository: "https://github.com/Virenbar/discord-emoji-export",
