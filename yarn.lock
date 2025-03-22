@@ -852,7 +852,7 @@
     "@typescript-eslint/types" "^8.26.0"
     "@typescript-eslint/utils" "^8.26.0"
 
-"@nuxt/eslint@^1.0.0":
+"@nuxt/eslint@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@nuxt/eslint/-/eslint-1.2.0.tgz#49202d814652b08d9c2e473dca21b1b232257798"
   integrity sha512-5hvlB0ZQMnIaXtgWH9V1xzub2YurFFJ66yMtQcy42sxwaEGUxJ+fYLDjfHbZKxTX0VE/CuNG7A57kEtrM9diPg==
