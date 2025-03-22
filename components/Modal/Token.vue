@@ -11,7 +11,9 @@
         <div class="modal-body">
           <h5> Using network tab</h5>
           <ul>
-            <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
+            <li>
+              Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)
+            </li>
             <li>Switch channel or server in Discord</li>
             <li>Go to <strong>Network</strong> tab</li>
             <li>Turn on XHR filter</li>
@@ -21,7 +23,9 @@
           <img src="/images/network.png">
           <h5> Using application tab (browser only)</h5>
           <ul>
-            <li>Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)</li>
+            <li>
+              Open development console (<span class="badge bg-secondary">F12</span> or <span class="badge bg-secondary">Ctrl + Shift + I</span>)
+            </li>
             <li>Go to <strong>Application</strong> tab</li>
             <li>Select local storage</li>
             <li>Search for <span class="badge bg-secondary">token</span> key</li>

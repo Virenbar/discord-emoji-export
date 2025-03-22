@@ -4,16 +4,16 @@ const { user, guilds, setToken, getToken } = useStore();
 const { token, getMe, getGuilds } = useDiscord();
 
 const tokenRegex = /(mfa\.[\w-]{20,})|([\w-]{20,}\.[\w-]{5,}\.[\w-]{20,})/;
-const input = useState<string>("input");
+const input = useState<string>('input');
 
 onMounted(async () => {
   if (await trySetToken(getToken())) {
-    Toast.showInfo("Token loaded from local storage");
+    Toast.showInfo('Token loaded from local storage');
   }
 });
 
 async function trySetToken(input: string) {
-  if (!input) { return false; }
+  if (!input) return false;
   try {
     token.value = input;
     user.value = await getMe();
@@ -21,7 +21,8 @@ async function trySetToken(input: string) {
     // Safe token if no error
     setToken(input);
     return true;
-  } catch (error) {
+  }
+  catch (error) {
     // Reset back if error
     token.value = getToken();
     console.error(error);
@@ -35,11 +36,12 @@ async function onClick() {
   const Match = tokenRegex.exec(token);
   if (Match?.length) {
     if (await trySetToken(Match[0])) {
-      Toast.showInfo("Token set and saved");
-      input.value = "";
+      Toast.showInfo('Token set and saved');
+      input.value = '';
     }
-  } else {
-    Toast.showWarning("Invalid token format", "Invalid token");
+  }
+  else {
+    Toast.showWarning('Invalid token format', 'Invalid token');
   }
 }
 </script>

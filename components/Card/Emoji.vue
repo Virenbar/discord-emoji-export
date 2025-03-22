@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { Emoji } from "~/types";
+import type { Emoji } from '~/types';
+
 const props = defineProps<{ emoji: Emoji }>();
 
 const Toast = useToast();
@@ -14,7 +15,7 @@ function download() {
 function copyID() {
   const id = `<${emojiID(props.emoji)}>`;
   navigator.clipboard.writeText(id);
-  Toast.showSuccess(`ID: ${id}`, "Emoji ID copied");
+  Toast.showSuccess(`ID: ${id}`, 'Emoji ID copied');
 }
 </script>
 <template>

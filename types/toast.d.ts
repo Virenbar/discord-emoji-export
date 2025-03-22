@@ -1,1 +1,1 @@
-type ToastType = "primary" | "secondary" | "success" | "info" | "warning" | "danger"
+type ToastType = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger';

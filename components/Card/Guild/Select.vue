@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { sortBy } from "lodash-es";
+import { sortBy } from 'lodash-es';
 
 const { guilds, selectedID, guildData } = useStore();
 const options = computed(() => sortBy(guilds.value, g => g.name.toLowerCase()));
@@ -8,7 +8,7 @@ const onClick = async () => {
   const { getGuildEmojis, getGuildStickers } = useDiscord();
   const id = selectedID.value;
   const guild = options.value.find(g => g.id == id);
-  if (!guild) { return; }
+  if (!guild) return;
 
   const name = guild.name;
   const emojis = sortBy(await getGuildEmojis(id), e => e.name?.toLowerCase());

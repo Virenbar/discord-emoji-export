@@ -8,6 +8,8 @@
   "editor.tabSize": 2,
   "typescript.tsdk": "node_modules/typescript/lib",
   "html.format.extraLiners": "body, /html", // Conflicts with <Head/>
+  "html.format.wrapAttributes": "preserve",
+  "html.format.wrapLineLength": 150,
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar",
   },
@@ -18,5 +20,5 @@
     "javascript",
     "typescript"
   ],
-  "eslint.experimental.useFlatConfig": true
+  "eslint.useFlatConfig": true
 }

@@ -1,7 +1,7 @@
-import { Emoji, Sticker } from "./discord";
+import type { Emoji, Sticker } from './discord';
 
-export * from "./discord";
-export * from "./toast";
+export * from './discord';
+export * from './toast';
 
 export interface GuildData {
   id: string

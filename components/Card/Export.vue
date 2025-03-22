@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { StickerFormatType } from "discord-api-types/v10";
-import type { ButtonStates } from "~/types";
+import { StickerFormatType } from 'discord-api-types/v10';
+import type { ButtonStates } from '~/types';
 
 const buttons = useState<ButtonStates>();
 
@@ -15,18 +15,20 @@ watchEffect(() => {
   const hasLottie = guild.stickers.some(S => S.format_type == StickerFormatType.Lottie);
 
   buttons.value = { emojiZIP: hasEmojis, emojiJSON: hasEmojis, stickerZIP: hasStickers };
-  if (hasLottie) { import("@lottiefiles/lottie-player"); }
+  if (hasLottie) import('@lottiefiles/lottie-player');
 });
 
 function saveEmojisJSON() {
   try {
     buttons.value.emojiJSON = false;
     saveEmojiJSON(guildData.value);
-    Toast.showSuccess("JSON generated");
-  } catch (error) {
+    Toast.showSuccess('JSON generated');
+  }
+  catch (error) {
     console.error(error);
     Toast.showError(error);
-  } finally {
+  }
+  finally {
     buttons.value.emojiJSON = true;
   }
 }
@@ -34,13 +36,15 @@ function saveEmojisJSON() {
 async function saveEmojisZIP() {
   try {
     buttons.value.emojiZIP = false;
-    Toast.showInfo("Creating ZIP archive");
+    Toast.showInfo('Creating ZIP archive');
     await saveEmojiZIP(guildData.value);
-    Toast.showSuccess("ZIP archive created");
-  } catch (error) {
+    Toast.showSuccess('ZIP archive created');
+  }
+  catch (error) {
     console.error(error);
     Toast.showError(error);
-  } finally {
+  }
+  finally {
     buttons.value.emojiZIP = true;
   }
 }
@@ -48,13 +52,15 @@ async function saveEmojisZIP() {
 async function saveStickersZIP() {
   try {
     buttons.value.stickerZIP = false;
-    Toast.showInfo("Creating ZIP archive");
+    Toast.showInfo('Creating ZIP archive');
     await saveStickerZIP(guildData.value);
-    Toast.showSuccess("ZIP archive created");
-  } catch (error) {
+    Toast.showSuccess('ZIP archive created');
+  }
+  catch (error) {
     console.error(error);
     Toast.showError(error);
-  } finally {
+  }
+  finally {
     buttons.value.stickerZIP = true;
   }
 }

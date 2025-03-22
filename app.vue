@@ -1,21 +1,21 @@
 <script setup lang="ts">
-const title = "Discord Emoji Export";
-const description = "Website for exporting emojis and stickers from any discord server you are in.";
+const title = 'Discord Emoji Export';
+const description = 'Website for exporting emojis and stickers from any discord server you are in.';
 useHead({
   title: title,
   meta: [
-    { name: "keywords", content: "download discord emojis, download discord stickers" }
+    { name: 'keywords', content: 'download discord emojis, download discord stickers' },
   ],
   link: [
-    { rel: "shortcut icon", href: `${useBaseURL("/favicon.ico")}` }
-  ]
+    { rel: 'shortcut icon', href: `${useBaseURL('/favicon.ico')}` },
+  ],
 });
 useServerSeoMeta({
-  ogType: "website",
+  ogType: 'website',
   ogTitle: title,
   ogSiteName: title,
   ogDescription: description,
-  description: description
+  description: description,
 });
 </script>
 <template>

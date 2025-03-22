@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { StickerFormatType } from "discord-api-types/v10";
-import type { Sticker } from "~/types";
-const props = defineProps<{ sticker: Sticker }>();
+import { StickerFormatType } from 'discord-api-types/v10';
+import type { Sticker } from '~/types';
 
+const props = defineProps<{ sticker: Sticker }>();
 const Toast = useToast();
 const { stickerURL } = useDiscord();
 const url = stickerURL(props.sticker);
@@ -11,7 +11,8 @@ async function download() {
   try {
     const { saveSticker } = useSave();
     await saveSticker(props.sticker);
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error);
     Toast.showError(error);
   }
