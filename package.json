@@ -26,12 +26,13 @@
     "@types/lodash-es": "^4.17.12",
     "discord-api-types": "^0.37.119",
     "eslint": "^9.19.0",
-    "nuxt": "^3.15.4",
+    "nuxt": "^3.16.1",
     "sass": "^1.83.4",
     "sass-loader": "^16.0.4",
     "typescript": "^5.7.3",
     "webpack": "^5.97.1"
   },
   "type": "module",
-  "private": true
+  "private": true,
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
