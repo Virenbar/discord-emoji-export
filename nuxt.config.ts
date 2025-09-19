@@ -1,3 +1,11 @@
+import { execSync } from 'child_process';
+
+const exec = (command: string) => execSync(command).toString().trim();
+const repository = 'https://github.com/Virenbar/discord-emoji-export';
+const branch = exec('git branch --show-current') || process.env.HEAD;
+const hash = exec('git rev-parse HEAD') || process.env.COMMIT_REF;
+const date = new Date().toISOString();
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
@@ -11,19 +19,14 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    public: {
-      repository: 'https://github.com/Virenbar/discord-emoji-export',
-      branch: process.env.HEAD || 'master',
-      hash: process.env.COMMIT_REF || 'unknown',
-      date: new Date().toISOString(),
-    },
+    public: { repository, branch, hash, date },
   },
   compatibilityDate: '2025-03-22',
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import'],
+          silenceDeprecations: ['color-functions', 'global-builtin', 'import'],
         },
       },
     },
