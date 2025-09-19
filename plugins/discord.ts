@@ -77,8 +77,9 @@ export default defineNuxtPlugin(() => {
   }
 
   function stickerURL(sticker: Sticker) {
-    // CDN returns "NoSuchKey" for gif stickers
-    const base = sticker.format_type == StickerFormatType.GIF ? 'https://media.discordapp.net' : RouteBases.cdn;
+    // GIFs are located at media EndPoint
+    // https://discord.com/developers/docs/reference#image-formatting-cdn-endpoints
+    const base = sticker.format_type == StickerFormatType.GIF ? RouteBases.media : RouteBases.cdn;
     return `${base}${CDNRoutes.sticker(sticker.id, stickerFormat(sticker))}`;
   }
 

@@ -39,7 +39,12 @@ async function fetchSticker(sticker: Sticker) {
   const name = stickerName(sticker);
   // stickers endpoint has no "Access-Control-Allow-Origin" header
   // const blob = await fetchBLOB(stickerURL(sticker));
-  const blob = await fetchBLOB(useCORS(stickerURL(sticker)));
+  // Use CORS only for CDN (GIFs on media work without CORS)
+  let url = stickerURL(sticker);
+  if (url.includes('cdn.discord')) {
+    url = useCORS(url);
+  }
+  const blob = await fetchBLOB(url);
   return { name, blob };
 }
 
