@@ -5,12 +5,11 @@ useHead({
   title: title,
   meta: [
     { name: 'keywords', content: 'download discord emojis, download discord stickers' },
+    { name: "description", content: description }
   ],
-  link: [
-    { rel: 'shortcut icon', href: `${useBaseURL('/favicon.ico')}` },
-  ],
+  link: [{ rel: 'shortcut icon', href: `${useBaseURL('/favicon.ico')}` },],
 });
-useServerSeoMeta({
+useSeoMeta({
   ogType: 'website',
   ogTitle: title,
   ogSiteName: title,
@@ -27,3 +26,6 @@ useServerSeoMeta({
     <div class="toast-container position-fixed py-3 px-1" />
   </div>
 </template>
+<style lang="scss">
+@use "~/assets/css/styles.scss";
+</style>

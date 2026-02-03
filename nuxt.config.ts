@@ -10,9 +10,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
   ],
-  css: [
-    '@/assets/css/styles.scss',
-  ],
   vue: {
     compilerOptions: {
       isCustomElement: tag => ['lottie-player'].includes(tag),
@@ -26,7 +23,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          silenceDeprecations: ['color-functions', 'global-builtin', 'import'],
+          silenceDeprecations: ['color-functions', 'global-builtin', 'import', 'if-function'],
         },
       },
     },
