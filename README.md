@@ -1,7 +1,7 @@
 # discord-emoji-export [![Build artifact][build-src]][build-href] [![Netlify Status][netlify-src]][netlify-href]
 
 Website for exporting emojis and stickers from any discord server you are in.
-![page](./assets/page.png)
+![page](./public/images/page.png)
 
 ## Features
 
@@ -39,15 +39,15 @@ Website for exporting emojis and stickers from any discord server you are in.
 
 2. Install dependencies
 
-    ```bash
-    yarn
-    ```
+```bash
+yarn
+```
 
 3. Build and start dev server
 
-    ```bash
-    yarn dev
-    ```
+```bash
+yarn dev
+```
 
 4. Open: <http://localhost:3000>
 
