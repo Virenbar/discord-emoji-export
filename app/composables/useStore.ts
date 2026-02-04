@@ -1,5 +1,6 @@
 import type { Guild, GuildData, User } from '~/types';
 
+const item = 'token';
 const Data: GuildData = { id: '', name: '', emojis: [], stickers: [] };
 
 export default function () {
@@ -8,10 +9,10 @@ export default function () {
   const selectedID = useState<string>(() => '');
   const guildData = useState<GuildData>(() => Data);
 
-  const getToken = () => localStorage.getItem('token') ?? '';
-  const setToken = (value: string) => localStorage.setItem('token', value);
+  const getToken = () => localStorage.getItem(item) ?? '';
+  const setToken = (value: string) => localStorage.setItem(item, value);
   const clear = () => {
-    if (!import.meta.dev) localStorage.clear();
+    if (!import.meta.dev) localStorage.removeItem(item);
     user.value = null;
     guilds.value = [];
     selectedID.value = '';
